@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,7 +32,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'scheduler.apps.SchedulerConfig',
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -41,15 +43,28 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.socialaccount.providers.google',
 ]
 
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
+SITE_ID = 2
+LOGIN_REDIRECT_URL = '/'
 
-SITE_ID = 1
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,7 +81,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,8 +146,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]

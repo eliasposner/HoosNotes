@@ -4,5 +4,5 @@ import unittest
 
 # Create your tests here.
 class LoginTestCase(TestCase):
-	def aEqualsB(self):
+	def test_dummy_test_case(self):
 		assertEquals(2, 2)

@@ -103,17 +103,34 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'ddcjlc7o2l88re',
-       'USER': 'wivxpbzsnudsrj',
-       'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
-       'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
-       'PORT': '5432',
-   }
-}
+if 'test' in sys.argv:
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': 'dfas7oh3hgbk0c',
+           'USER': 'xkrugjfabaansv',
+           'PASSWORD': 'b3ffca99449c05e3fd4c7640eec26699f349d14222fede1353e4501a93d5c073',
+           'HOST': 'ec2-3-215-83-124.compute-1.amazonaws.com',
+           'PORT': 5432,
+           'TEST': {
+                'NAME': 'dfas7oh3hgbk0c'
+           }
+       }
+    }
+else:
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': 'ddcjlc7o2l88re',
+           'USER': 'wivxpbzsnudsrj',
+           'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
+           'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+           'PORT': 5432,
+           'TEST': {
+                'NAME': 'ddcjlc7o2l88re'
+           }
+       }
+    }
 
 
 # Password validation

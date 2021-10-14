@@ -40,11 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
+
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 
 SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
@@ -78,6 +81,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -150,6 +154,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -159,6 +164,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'

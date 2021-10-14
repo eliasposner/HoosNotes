@@ -103,6 +103,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# https://stackoverflow.com/questions/21978562/django-test-error-permission-denied-to-create-database-using-heroku-postgres
 if 'test' in sys.argv:
     DATABASES = {
         'default': {

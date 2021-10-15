@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import django_heroku
 import os, sys
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,7 +31,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'scheduler.apps.SchedulerConfig',
     'django.contrib.admin',
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Code for providing Django access to all-auth apps from Mudh Rahiman, 2/27/2021
     # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
     'allauth',
     'allauth.account',
@@ -47,8 +49,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 ]
 
+# Code for configuring login and Google authentication settings adapted from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
-
 SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
 
@@ -81,6 +83,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
+# Code for defining template settings from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 TEMPLATES = [
     {
@@ -104,6 +107,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Code for allowing Github Actions CI to create a test database adapted from user Hybrid, 2/24/14
 # https://stackoverflow.com/questions/21978562/django-test-error-permission-denied-to-create-database-using-heroku-postgres
 if 'test' in sys.argv:
     DATABASES = {
@@ -129,7 +133,6 @@ else:
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -148,7 +151,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -162,19 +164,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
 
+# Code for adding static & media folder directories from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
+# Code for specifying allauth backend and configuration settings from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

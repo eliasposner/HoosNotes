@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
-import os
+import os, sys
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -104,16 +104,27 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'ddcjlc7o2l88re',
-       'USER': 'wivxpbzsnudsrj',
-       'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
-       'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
-       'PORT': '5432',
-   }
-}
+# https://stackoverflow.com/questions/21978562/django-test-error-permission-denied-to-create-database-using-heroku-postgres
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': 'ddcjlc7o2l88re',
+           'USER': 'wivxpbzsnudsrj',
+           'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
+           'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+           'PORT': 5432,
+           'TEST': {
+                'NAME': 'ddcjlc7o2l88re'
+           }
+       }
+    }
 
 
 # Password validation

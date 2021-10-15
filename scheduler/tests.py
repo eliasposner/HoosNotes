@@ -3,6 +3,6 @@ import unittest
 
 
 # Create your tests here.
-class LoginTestCase(TestCase):
+class LoginTestCase(unittest.TestCase):
 	def test_dummy_test_case(self):
-		assertEquals(2, 2)
+		self.assertEqual(2, 2)

@@ -41,35 +41,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Code for providing Django access to all-auth apps from Mudh Rahiman, 2/27/2021
-    # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
+    # Code for configuring django-all-auth applications adapted from Moeedlodhi, 6/21/2021
+    # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
+    # Code for configuring django REST framework applications
+    # https://www.django-rest-framework.org/
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
-# Code for configuring login and Google authentication settings adapted from Mudh Rahiman, 2/27/2021
+# Code for configuring site_id and login_redirect_url adapted from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
 
-SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET= True
-ACCOUNT_UNIQUE_EMAIL = True
+# Code for configuring authentication credential settings from Moeedlodhi, 6/21/2021
+# https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -109,26 +104,25 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Code for allowing Github Actions CI to create a test database adapted from user Hybrid, 2/24/14
 # https://stackoverflow.com/questions/21978562/django-test-error-permission-denied-to-create-database-using-heroku-postgres
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ddcjlc7o2l88re',
+        'USER': 'wivxpbzsnudsrj',
+        'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
+        'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+        'PORT': 5432,
+        #'TEST': {
+        #        'NAME': 'ddcjlc7o2l88re'
+        #}
+    }
+}
 if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-        }
+    DATABASES['test'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.postgresql_psycopg2',
-           'NAME': 'ddcjlc7o2l88re',
-           'USER': 'wivxpbzsnudsrj',
-           'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
-           'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
-           'PORT': 5432,
-           'TEST': {
-                'NAME': 'ddcjlc7o2l88re'
-           }
-       }
-    }
+
 
 
 # Password validation
@@ -176,9 +170,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
-# Code for specifying allauth backend and configuration settings from Mudh Rahiman, 2/27/2021
-# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
-]
+# This configures the my_adapter file, which handles collisions (when a social account and a regular account has the same email)
+# Adapted from Moeedlodhi, 6/21/2021
+# https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
+SOCIALACCOUNT_ADAPTER = 'scheduler.my_adapter.MyAdapter'

@@ -1,28 +1,40 @@
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 import unittest
 
 # Create your tests here.
 
 class LoginTest(unittest.TestCase):
-	'''
-	def setUp(self):
+	
+	#def setUp(self):
+	#	User = get_user_model()
+		#user = User.objects.create_user(username='test', email='test@email.com')
+		#user.save()
+
+		#allUsers = User.objects.all()
+
+
+	# Check if registered account exists
+	def test_registered_acc_exists(self):
 		User = get_user_model()
-		user = User.objects.create_user(username='test', password='t3st!!', email='test@email.com')
-		user.save()
+		user = User.objects.get(username='keith')
+		allUsers = User.objects.all()
+		self.assertTrue(user in allUsers)
 
-	# Test case adapted from Professor Sherrif's lecture on 10/7/2021 at 11am
-	def test_correct_credentials(self):
-		c = Client()
-		logged_in = c.login(username='test', password='t3st!!', email='test@email.com')
-		self.assertTrue(logged_in)
+	def test_unregistered_acc_does_not_exist(self):
+		User = get_user_model()
+		allUsers = User.objects.all()
+		unregisted_user = User(username='unregistered', email='unregistered@email.com')
+		self.assertFalse(unregisted_user in allUsers)
 
-	def test_incorrect_password(self):
-		c = Client()
-		logged_in = c.login(username='test', password='T3st!!', email='test@email.com')
-		self.assertFalse(logged_in)
-	'''
+	def test_account_is_created(self):
+		User = get_user_model()
+		user = User.objects.create_user(username='newUser', email='newUser@email.com')
+		allUsers = User.objects.all()
+		self.assertTrue(user in allUsers)
 
-	def test_dummy_test_case(self):
-		self.assertEqual(2,2)
+	# Check if unregistered account does not exist
+	#def test_unregistered_acc_does_not_exist(self):
+
 

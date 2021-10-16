@@ -104,26 +104,25 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Code for allowing Github Actions CI to create a test database adapted from user Hybrid, 2/24/14
 # https://stackoverflow.com/questions/21978562/django-test-error-permission-denied-to-create-database-using-heroku-postgres
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ddcjlc7o2l88re',
+        'USER': 'wivxpbzsnudsrj',
+        'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
+        'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+        'PORT': 5432,
+        #'TEST': {
+        #        'NAME': 'ddcjlc7o2l88re'
+        #}
+    }
+}
 if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-        }
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.postgresql_psycopg2',
-           'NAME': 'ddcjlc7o2l88re',
-           'USER': 'wivxpbzsnudsrj',
-           'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
-           'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
-           'PORT': 5432,
-           'TEST': {
-                'NAME': 'ddcjlc7o2l88re'
-           }
-       }
-    }
+
 
 
 # Password validation

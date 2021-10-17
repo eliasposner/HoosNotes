@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
-import os
+import os, sys
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,7 +31,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'scheduler.apps.SchedulerConfig',
     'django.contrib.admin',
@@ -40,31 +40,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Code for configuring django-all-auth applications adapted from Moeedlodhi, 6/21/2021
+    # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
+    # Code for configuring django REST framework applications
+    # https://www.django-rest-framework.org/
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
+# Code for configuring site_id and login_redirect_url adapted from Mudh Rahiman, 2/27/2021
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
 
-SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET= True
-ACCOUNT_UNIQUE_EMAIL = True
+# Code for configuring authentication credential settings from Moeedlodhi, 6/21/2021
+# https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +78,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'mysite.urls'
 
+# Code for defining template settings from Mudh Rahiman, 2/27/2021
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -100,21 +102,31 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Code for allowing Github Actions CI to create a test database adapted from user Hybrid, 2/24/14
+# https://stackoverflow.com/questions/21978562/django-test-error-permission-denied-to-create-database-using-heroku-postgres
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql_psycopg2',
-       'NAME': 'ddcjlc7o2l88re',
-       'USER': 'wivxpbzsnudsrj',
-       'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
-       'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
-       'PORT': '5432',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ddcjlc7o2l88re',
+        'USER': 'wivxpbzsnudsrj',
+        'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
+        'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
+        'PORT': 5432,
+        #'TEST': {
+        #        'NAME': 'ddcjlc7o2l88re'
+        #}
+    }
 }
+if 'test' in sys.argv:
+    DATABASES['test'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+
 
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -133,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -147,19 +158,19 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
 
+# Code for adding static & media folder directories from Mudh Rahiman, 2/27/2021
+# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
-]
+# This configures the my_adapter file, which handles collisions (when a social account and a regular account has the same email)
+# Adapted from Moeedlodhi, 6/21/2021
+# https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
+SOCIALACCOUNT_ADAPTER = 'scheduler.my_adapter.MyAdapter'

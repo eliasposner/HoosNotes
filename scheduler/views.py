@@ -40,3 +40,7 @@ class ClassListView(generic.ListView):
     context_object_name = 'list_of_classes'
     def get_queryset(self):
         return Class.object.all()
+
+def lists_classes(request):
+    classes = Class.objects.all().filter(user=request.user)
+    

@@ -6,4 +6,6 @@ from . import views
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 urlpatterns = [
     path('', views.view_name, name="view_name"),
+    path('classes/', views.ClassListView.as_view(), name = 'Classes'),
+    path('create/', views.ClassView, name = 'ClassCreate'),
 ]

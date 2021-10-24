@@ -1,13 +1,18 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
+=======
+
+>>>>>>> parent of af0b7a3 (Start of first major feature)
 
 # Code for rendering the login success template from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 def view_name(request):
+<<<<<<< HEAD
     return render(request, 'scheduler/index.html', {})
 
 <<<<<<< HEAD
@@ -68,3 +73,6 @@ class ClassListView(generic.ListView):
     def get_queryset(self):
         return Class.object.all()
 >>>>>>> parent of 548273d (Adding user specific data access)
+=======
+    return render(request, 'scheduler/index.html', {})
+>>>>>>> parent of af0b7a3 (Start of first major feature)

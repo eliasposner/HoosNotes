@@ -1,15 +1,20 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+class UserProfile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	name = models.CharField(max_length=40)
+	
+class StudentClass(models.Model):
+	class_name = models.CharField(max_length=200, default ='')
+	instructor = models.CharField(max_length=200, default='')
+	enrolled_users = models.JSONField(default=[])
+	enrolled_users_count = models.IntegerField(default=0)
 
-class Class(models.Model):
-    """user = models.ForeignKey(User, on_delete=models.CASCADE)"""
-    classname = models.CharField(max_length=200)
-    def __str__(self):
-        return self.classname
->>>>>>> parent of 548273d (Adding user specific data access)
-=======
->>>>>>> parent of af0b7a3 (Start of first major feature)
+	class Meta:
+		verbose_name_plural = 'Student Classes'
+
+	def __str__(self):
+		return self.class_name
+

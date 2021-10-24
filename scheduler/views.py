@@ -1,3 +1,5 @@
+from django.db.models.fields import GenericIPAddressField
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
@@ -8,7 +10,7 @@ from scheduler.models import StudentClass
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
-
+from django.views import generic
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
 
@@ -22,12 +24,17 @@ def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=response.data['key'])
         return Response({'token': token.key, 'id': token.user_id})
 
-
+# https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
 class StudentClassCreateView(CreateView):
     model = StudentClass
     fields = ['class_name', 'instructor']
     template_name = 'scheduler/createclass.html'
     success_url = '../'
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.users.add(self.request.user)
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
 
 # Code for logout functionality. Deletes both the regular token and social token (if it exists) when the user sends a logout request

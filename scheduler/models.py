@@ -9,12 +9,12 @@ class UserProfile(models.Model):
 class StudentClass(models.Model):
 	class_name = models.CharField(max_length=200, default ='')
 	instructor = models.CharField(max_length=200, default='')
-	enrolled_users = models.JSONField(default=[])
+	users = models.ManyToManyField(User)
 	enrolled_users_count = models.IntegerField(default=0)
 
 	class Meta:
 		verbose_name_plural = 'Student Classes'
 
 	def __str__(self):
-		return self.class_name
+		return str(self.users)
 

@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 def view_name(request):
     return render(request, 'scheduler/index.html', {})
 
+<<<<<<< HEAD
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
 class GoogleLogin(SocialLoginView):
@@ -38,3 +39,32 @@ def User_logout(request):
     logout(request)
 
     return Response('User Logged out successfully')
+=======
+
+
+""" In ClassView you should be able to create a class and s
+    this should redirect you to the list of classes so that
+    you can join them."""
+
+def ClassView(request):
+    template_name = 'scheduler/class.html'
+    if request.method == 'POST':
+        form = ClassForm(request.POST)
+        if form.is_valid():
+            form.save()
+    form = ClassForm()
+    return render(request, "scheduler/class.html", {'form': form})
+
+""" In ClassListView the list of classes should be shown
+    and in the template you should be able to select a 
+    a class or create one. If you press create it should 
+    redirect to ClassView template which is where you fill
+    out a form and create a class."""
+
+class ClassListView(generic.ListView):
+    models = Class
+    template_name = 'scheduler/classlist.html'
+    context_object_name = 'list_of_classes'
+    def get_queryset(self):
+        return Class.object.all()
+>>>>>>> parent of 548273d (Adding user specific data access)

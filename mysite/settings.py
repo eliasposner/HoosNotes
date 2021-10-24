@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    'bootstrap5',
     'scheduler.apps.SchedulerConfig',
     'django.contrib.admin',
     'django.contrib.sites',

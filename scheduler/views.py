@@ -9,14 +9,8 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 
-# Code for rendering the login success template from Mudh Rahiman, 2/27/2021
-# https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
-#def view_name(request):
-#    return render(request, 'scheduler/index.html', {})
-
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
-
 
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
@@ -53,3 +47,4 @@ def User_logout(request):
     logout(request)
 
     return Response('User Logged out successfully')
+

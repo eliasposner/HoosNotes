@@ -6,7 +6,6 @@ class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	name = models.CharField(max_length=40)
 	
-
 class StudentClass(models.Model):
 	class_name = models.CharField(max_length=200, default ='')
 	instructor = models.CharField(max_length=200, default='')
@@ -17,3 +16,4 @@ class StudentClass(models.Model):
 
 	def __str__(self):
 		return self.class_name
+

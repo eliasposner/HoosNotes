@@ -112,13 +112,10 @@ DATABASES = {
         'PASSWORD': '1d35cbe3b7cd42bafff06afb1b815feac9c146ab686e0f1ba714118382d3ff6d',
         'HOST': 'ec2-54-145-110-118.compute-1.amazonaws.com',
         'PORT': 5432,
-        #'TEST': {
-        #        'NAME': 'ddcjlc7o2l88re'
-        #}
     }
 }
 if 'test' in sys.argv:
-    DATABASES['test'] = {
+    DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
@@ -168,7 +165,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
+django_heroku.settings(locals(), test_runner=False)
 
 # This configures the my_adapter file, which handles collisions (when a social account and a regular account has the same email)
 # Adapted from Moeedlodhi, 6/21/2021

@@ -27,6 +27,7 @@
                         <a class="dropdown-item" href="#">Class 1</a>
                         <a class="dropdown-item" href="#">Class 2</a>
                         <a class="dropdown-item" href="#">Class 3</a>
+                        <a class="dropdown-item" href="createclass"> + Add class</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -37,6 +38,7 @@
                         <a class="dropdown-item" href="#">Settings/Preferences</a>
                         <a class="dropdown-item" href="#">Edit schedule</a>
                         <a class="dropdown-item" href="#">Manage classes</a>
+                        <a class="dropdown-item" href="{% url 'account_logout' %}"> Log out </a>
                     </div>
                 </li>
             </ul>
@@ -55,7 +57,7 @@
     {% endif %}
 
 </body>
-<footer class="text-center text-lg-start bg-light">
+<footer class="text-center text-lg-start bg-light fixed-bottom">
     <div class="text-center p-4">
         © 2021 Copyright: Group A-20
     </div>

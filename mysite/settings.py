@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    'bootstrap5',
     'scheduler.apps.SchedulerConfig',
     'django.contrib.admin',
     'django.contrib.sites',
@@ -165,7 +166,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
+django_heroku.settings(locals(), test_runner=False)
 
 # This configures the my_adapter file, which handles collisions (when a social account and a regular account has the same email)
 # Adapted from Moeedlodhi, 6/21/2021

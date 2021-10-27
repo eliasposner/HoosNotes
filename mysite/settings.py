@@ -59,6 +59,8 @@ INSTALLED_APPS = [
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_ON_GET = True
 
 # Code for configuring authentication credential settings from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0

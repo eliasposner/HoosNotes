@@ -8,6 +8,9 @@ from scheduler.models import StudentClass
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
@@ -22,7 +25,7 @@ def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=response.data['key'])
         return Response({'token': token.key, 'id': token.user_id})
 
-
+@method_decorator(login_required(login_url='accounts/google/login'), name='dispatch')
 class StudentClassCreateView(CreateView):
     model = StudentClass
     fields = ['class_name', 'instructor']

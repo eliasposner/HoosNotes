@@ -5,12 +5,19 @@ from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from scheduler.models import StudentClass
+from scheduler.models import Assignment
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
+class AssignmentListView(ListView):
+    model = Assignment
+    fields = ['assignment_name', 'due_date']
+    template_name = 'scheduler/home.html'
 
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
@@ -20,6 +27,9 @@ class HomeView(TemplateView):
 
 class AllClassesView(TemplateView):
     template_name = 'scheduler/allclasses.html'
+
+class AssignmentOrganizerView(TemplateView):
+    template_name = 'scheduler/assignmentorganizer.html'
 
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0

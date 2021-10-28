@@ -17,3 +17,8 @@ class StudentClass(models.Model):
 	def __str__(self):
 		return self.class_name
 
+class Assignment(models.Model):
+	assignment_name = models.CharField(max_length=200, default = '')
+	due_date = models.DateField()
+	
+

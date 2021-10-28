@@ -16,5 +16,7 @@ urlpatterns = [
 
     path('home', views.HomeView.as_view(), name = "home_view"),
 
-    path("allclasses", views.AllClassesView.as_view(), name = "allclasses_view")
+    path("allclasses", views.AllClassesView.as_view(), name = "allclasses_view"),
+
+    path("assignmentorganizer", views.AssignmentOrganizerView.as_view(), name = "assignmentorganizer_view")
 ]

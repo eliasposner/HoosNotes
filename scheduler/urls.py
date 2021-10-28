@@ -12,5 +12,9 @@ urlpatterns = [
     # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
     path('rest-auth/google/', views.GoogleLogin.as_view(), name='redirect'),
     
-    path('createclass', views.StudentClassCreateView.as_view(), name='create_student_class')
+    path('createclass', views.StudentClassCreateView.as_view(), name='create_student_class'),
+
+    path('home', views.HomeView.as_view(), name = "home_view"),
+
+    path("allclasses", views.AllClassesView.as_view(), name = "allclasses_view")
 ]

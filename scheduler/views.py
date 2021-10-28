@@ -15,6 +15,12 @@ from django.utils.decorators import method_decorator
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
 
+class HomeView(TemplateView):
+    template_name = 'scheduler/home.html'
+
+class AllClassesView(TemplateView):
+    template_name = 'scheduler/allclasses.html'
+
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
 class GoogleLogin(SocialLoginView):
@@ -30,7 +36,7 @@ class StudentClassCreateView(CreateView):
     model = StudentClass
     fields = ['class_name', 'instructor']
     template_name = 'scheduler/createclass.html'
-    success_url = '../'
+    success_url = 'allclasses'
 
 
 # Code for logout functionality. Deletes both the regular token and social token (if it exists) when the user sends a logout request

@@ -5,7 +5,6 @@ from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from scheduler.models import StudentClass
-from scheduler.models import Assignment
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
@@ -13,11 +12,6 @@ from django.views.generic.detail import DetailView
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
-class AssignmentListView(ListView):
-    model = Assignment
-    fields = ['assignment_name', 'due_date']
-    template_name = 'scheduler/home.html'
 
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'

@@ -12,17 +12,7 @@
     </form>
 </div>
 
- {% if assignment_list %}
-  <ul>
-    {% for assignment in assignment_list %}
-      <li>
-        <a href="{{ assignment.get_absolute_url }}">{{ assignemnt.assignment.name }}</a> ({{assignment.due_date}})
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
     <p>No Assignments Due</p>
-  {% endif %}
 
 {% endblock %}
 

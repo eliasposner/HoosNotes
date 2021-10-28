@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db.models.fields import GenericIPAddressField
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
@@ -6,11 +7,13 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from scheduler.models import StudentClass
+from scheduler.models import StudentClass, Profile
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views import generic
+from django.views.generic.list import ListView
+
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
 
@@ -32,9 +35,17 @@ class StudentClassCreateView(CreateView):
     success_url = '../'
     def form_valid(self, form):
         self.object = form.save()
-        self.object.users.add(self.request.user)
+        self.object.users.add(self.request.user.profile)
+        self.object.enrolled_users_count += 1
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
+
+class StudentClassListView(ListView):
+    model = Profile
+    template_name = 'scheduler/listclass.html'
+    context_object_name = 'list_of_classes'
+    def get_queryset(self):
+        return StudentClass.objects.filter(id = self.request.user.id)
 
 
 # Code for logout functionality. Deletes both the regular token and social token (if it exists) when the user sends a logout request

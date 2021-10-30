@@ -1,14 +1,17 @@
 <!--Template for testing social authentication adapted from Muhd Rahiman, 2/27/2021
     https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8-->
-
+{% extends "base.html" %}
 {% load socialaccount %}
+
 <html>
 
 <head>
     <title>Google Registration</title>
 </head>
 
+
 <body>
+    {% block content %}
     <h1>My Google Login Project</h1>
     {% if user.is_authenticated %}
     <p>Welcome, {{ user.username }} !</p>
@@ -16,7 +19,7 @@
     {% else %}
     <a href="{% provider_login_url 'google' %}">Login with Google</a>
     {% endif %}
-
+    {% endblock %}
 </body>
 
 </html>

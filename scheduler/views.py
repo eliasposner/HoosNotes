@@ -13,6 +13,9 @@ from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views import generic
 from django.views.generic.list import ListView
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
@@ -28,11 +31,12 @@ def post(self, request, *args, **kwargs):
         return Response({'token': token.key, 'id': token.user_id})
 
 # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
+@method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class StudentClassCreateView(CreateView):
     model = StudentClass
     fields = ['class_name', 'instructor']
     template_name = 'scheduler/createclass.html'
-    success_url = '../'
+    success_url = '/listclasses'
     def form_valid(self, form):
         self.object = form.save()
         self.object.users.add(self.request.user.profile)
@@ -40,6 +44,7 @@ class StudentClassCreateView(CreateView):
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
+@method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class StudentClassListView(ListView):
     model = Profile
     template_name = 'scheduler/listclass.html'
@@ -48,6 +53,7 @@ class StudentClassListView(ListView):
         q1 = Profile.objects.filter(user=self.request.user)[0]
         return q1.studentclass_set.all()#Profile.objects.filter(user=self.request.user)
 
+'''
 class ClassView(DetailView):
     model = StudentClass
     template_name = 'scheduler/class.html'
@@ -55,9 +61,7 @@ class ClassView(DetailView):
 def classpage(request, class_id):
     desiredClass = get_object_or_404(StudentClass, pk=class_id)
     return HttpResponseRedirect(reverse('scheduler:class', args = (desiredClass.id,)))
-
-
-
+'''
 
 # Code for logout functionality. Deletes both the regular token and social token (if it exists) when the user sends a logout request
 # Adapted from Moeedlodhi, 6/21/2021

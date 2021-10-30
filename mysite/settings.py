@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
+    'bootstrap5',
     'scheduler.apps.SchedulerConfig',
     'django.contrib.admin',
     'django.contrib.sites',
@@ -58,6 +59,8 @@ INSTALLED_APPS = [
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_ON_GET = True
 
 # Code for configuring authentication credential settings from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
@@ -83,7 +86,8 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates/'],
+        #'DIRS': ['templates/'],
+        'DIRS' : [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

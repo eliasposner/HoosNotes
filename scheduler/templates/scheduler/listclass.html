@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% if list_of_classes %}
     <u1>
     {% for class in list_of_classes %}
@@ -7,3 +10,4 @@
     <p>No Classes are available.</p>  
 
 {% endif %}
+{% endblock %}

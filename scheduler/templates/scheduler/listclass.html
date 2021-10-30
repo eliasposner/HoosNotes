@@ -1,7 +1,7 @@
 {% if list_of_classes %}
     <u1>
     {% for class in list_of_classes %}
-        <p> Class: {{class.class_name}}</p>
+        <p> Class: {{class.class_name}} &nbsp;&nbsp;&nbsp; Instructor: {{class.instructor}} </p>
     {% endfor %}
 {% else %}  
     <p>No Classes are available.</p>  

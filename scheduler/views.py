@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db.models.fields import GenericIPAddressField
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
@@ -45,7 +45,18 @@ class StudentClassListView(ListView):
     template_name = 'scheduler/listclass.html'
     context_object_name = 'list_of_classes'
     def get_queryset(self):
-        return StudentClass.objects.filter(id = self.request.user.id)
+        q1 = Profile.objects.filter(user=self.request.user)[0]
+        return q1.studentclass_set.all()#Profile.objects.filter(user=self.request.user)
+
+class ClassView(DetailView):
+    model = StudentClass
+    template_name = 'scheduler/class.html'
+
+def classpage(request, class_id):
+    desiredClass = get_object_or_404(StudentClass, pk=class_id)
+    return HttpResponseRedirect(reverse('scheduler:class', args = (desiredClass.id,)))
+
+
 
 
 # Code for logout functionality. Deletes both the regular token and social token (if it exists) when the user sends a logout request

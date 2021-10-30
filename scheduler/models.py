@@ -8,7 +8,7 @@ class Profile(models.Model):
 	name = models.CharField(max_length=40)
 	
 	def __str__(self):
-		return self.user.__str__()
+		return str([str(p) for p in self.studentclass_set.all()])
 #https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

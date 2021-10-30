@@ -13,10 +13,5 @@ urlpatterns = [
     path('rest-auth/google/', views.GoogleLogin.as_view(), name='redirect'),
     
     path('createclass', views.StudentClassCreateView.as_view(), name='create_student_class'),
-
-    path('home', views.HomeView.as_view(), name = "home_view"),
-
-    path("allclasses", views.AllClassesView.as_view(), name = "allclasses_view"),
-
-    path("assignmentorganizer", views.AssignmentOrganizerView.as_view(), name = "assignmentorganizer_view")
+    path('listclasses/', views.StudentClassListView.as_view(), name = 'list_student_classes'),
 ]

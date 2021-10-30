@@ -2,10 +2,17 @@
     https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8-->
 {% extends "base.html" %}
 
+
 {% block content %}
-<form method="post">{% csrf_token %}
+    <h1>Assignment List</h1>
+   <div>
+    <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
-</form>
+    <input type="submit" value="+ Add Assignment">
+    </form>
+</div>
+
+    <p>No Assignments Due</p>
+
 {% endblock %}
 

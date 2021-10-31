@@ -34,7 +34,7 @@ def post(self, request, *args, **kwargs):
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class StudentClassCreateView(CreateView):
     model = StudentClass
-    fields = ['class_name', 'instructor']
+    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location']
     template_name = 'scheduler/createclass.html'
     success_url = '/listclasses'
     def form_valid(self, form):

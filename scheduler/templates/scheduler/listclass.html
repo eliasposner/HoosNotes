@@ -2,12 +2,12 @@
 
 {% block content %}
 {% if list_of_classes %}
-    <u1>
+    <ul class="list-group text-center">
     {% for class in list_of_classes %}
-        <p> Class: {{class.class_name}} &nbsp;&nbsp;&nbsp; Instructor: {{class.instructor}} </p>
+        <li class="list-group-item"> Class: {{class.class_name}} &nbsp;&nbsp;&nbsp; Instructor: {{class.instructor}} &nbsp;&nbsp;&nbsp; Start: {{class.start_time}} &nbsp;&nbsp;&nbsp; End: {{class.end_time}} &nbsp;&nbsp;&nbsp; Location: {{class.location}}</li>
     {% endfor %}
+    </ul>
 {% else %}  
     <p>No Classes are available.</p>  
-
 {% endif %}
 {% endblock %}

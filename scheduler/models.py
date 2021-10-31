@@ -28,8 +28,8 @@ class StudentClass(models.Model):
 	class_name = models.CharField(max_length=200, default='')
 	instructor = models.CharField(max_length=200, default='')
 	users = models.ManyToManyField(Profile)
-	start_time = models.TimeField(null=True, help_text='Please use the following format:  HH:MM')
-	end_time = models.TimeField(null=True, help_text='Please use the following format:  HH:MM')
+	start_time = models.TimeField(null=True)
+	end_time = models.TimeField(null=True)
 	location = models.CharField(max_length=200, default='')
 	enrolled_users_count = models.IntegerField(default=0)
 

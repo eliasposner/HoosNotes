@@ -3,9 +3,22 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<center>
+
+<div class="mt-lg-4">
+
+<div class="container">
+    	<h3 class="text-center">Add a Class</h6>
+    	<h6 class="text-center">For time, please use the following format: HH:MM </h6>
+</div>
+
+<div class="mt-lg-4">
+
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <input type="submit" value="Save Class">
 </form>
+</center>
 {% endblock %}
 

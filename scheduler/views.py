@@ -45,6 +45,21 @@ class StudentClassCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
+
+class StudentClassJoinView(CreateView):
+    model = StudentClass
+    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location']
+    template_name = 'scheduler/joinclass.html'
+    success_url = '/joinclasses'
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.users.add(self.request.user.profile)
+        self.object.enrolled_users_count += 1
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+@method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
+
 class StudentClassListView(ListView):
     model = Profile
     template_name = 'scheduler/listclass.html'

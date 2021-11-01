@@ -2,7 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from functools import reduce
+from multiselectfield import MultiSelectField
 import datetime
+
 
 # Create your models here.
 class Profile(models.Model):
@@ -32,6 +35,19 @@ class StudentClass(models.Model):
 	end_time = models.TimeField(null=True)
 	location = models.CharField(max_length=200, default='')
 	enrolled_users_count = models.IntegerField(default=0)
+	
+	DAY_OF_THE_WEEK = (
+		("Sunday", "Sunday"),
+		("Monday", "Monday"),
+		("Tuesday", "Tuesday"),
+		("Wednesday", "Wednesday"),
+		("Thursday", "Thursday"),
+		("Friday", "Friday"),
+		("Saturday", "Saturday"),
+	)
+
+	days_of_the_week = MultiSelectField(choices = DAY_OF_THE_WEEK)
+
 
 	class Meta:
 		verbose_name_plural = 'Student Classes'

@@ -34,7 +34,7 @@ def post(self, request, *args, **kwargs):
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class StudentClassCreateView(CreateView):
     model = StudentClass
-    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location']
+    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location', 'days_of_the_week']
     template_name = 'scheduler/createclass.html'
     success_url = '/listclasses'
     def form_valid(self, form):
@@ -48,7 +48,7 @@ class StudentClassCreateView(CreateView):
 
 class StudentClassJoinView(CreateView):
     model = StudentClass
-    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location']
+    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location', 'days_of_the_week']
     template_name = 'scheduler/joinclass.html'
     success_url = '/joinclasses'
     def form_valid(self, form):

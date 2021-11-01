@@ -5,3 +5,4 @@ django-heroku
 django-allauth
 django-rest-auth
 django-bootstrap-v5 
+django-multiselectfield

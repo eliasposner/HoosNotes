@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'multiselectfield',
 
     # Code for configuring django-all-auth applications adapted from Moeedlodhi, 6/21/2021
     # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0

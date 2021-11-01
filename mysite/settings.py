@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+     #.....................#
+
     'multiselectfield',
 
     # Code for configuring django-all-auth applications adapted from Moeedlodhi, 6/21/2021
@@ -54,6 +57,8 @@ INSTALLED_APPS = [
     # https://www.django-rest-framework.org/
     'rest_framework',
     'rest_framework.authtoken'
+
+
 ]
 
 # Code for configuring site_id and login_redirect_url adapted from Mudh Rahiman, 2/27/2021
@@ -170,7 +175,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals(), test_runner=False)
+#django_heroku.settings(locals(), test_runner=False)
 
 # This configures the my_adapter file, which handles collisions (when a social account and a regular account has the same email)
 # Adapted from Moeedlodhi, 6/21/2021

@@ -21,15 +21,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="classDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         My Classes
                     </a>
                     <div class="dropdown-menu" aria-labelledby="classDropdown">
-                        <a class="dropdown-item" href="/listclasses">All Classes</a>
-                        <a class="dropdown-item" href="#">Class 1</a>
-                        <a class="dropdown-item" href="#">Class 2</a>
-                        <a class="dropdown-item" href="#">Class 3</a>
+                            <a class="dropdown-item" href="/listclasses">All Classes</a>
                         <a class="dropdown-item" href="/createclass"> + Add class</a>
                         <a class="dropdown-item" href="#">+ Join class</a>
                     </div>
@@ -45,6 +43,11 @@
                         <a class="dropdown-item" href="{% url 'account_logout' %}"> Log out </a>
                     </div>
                 </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% provider_login_url 'google' %}">Login with Google</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
         

@@ -68,11 +68,11 @@ class StudentClassListView(ListView):
         q1 = Profile.objects.filter(user=self.request.user)[0]
         return q1.studentclass_set.all()#Profile.objects.filter(user=self.request.user)
 
-'''
+@method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class ClassView(DetailView):
     model = StudentClass
     template_name = 'scheduler/class.html'
-
+'''
 def classpage(request, class_id):
     desiredClass = get_object_or_404(StudentClass, pk=class_id)
     return HttpResponseRedirect(reverse('scheduler:class', args = (desiredClass.id,)))

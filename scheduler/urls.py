@@ -15,5 +15,5 @@ urlpatterns = [
     path('createclass', views.StudentClassCreateView.as_view(), name='create_student_class'),
     path('listclasses/', views.StudentClassListView.as_view(), name = 'list_student_classes'),
     path('joinclasses/', views.StudentClassJoinView.as_view(), name = 'join_student_classes'),
-
+    path('class/<int:pk>/', views.ClassView.as_view(), name="class_detail"),
 ]

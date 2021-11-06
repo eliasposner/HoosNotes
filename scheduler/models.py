@@ -22,6 +22,10 @@ class NoteFile(models.Model):
 	title = models.CharField(max_length=200, default='')
 	upload_time = models.DateTimeField(auto_now=True)
 	user = models.ManyToManyField(Profile)
+
+	def __str__(self):
+		return self.title
+
 #https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

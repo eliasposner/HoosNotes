@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 
@@ -16,4 +18,8 @@ urlpatterns = [
     path('listclasses/', views.StudentClassListView.as_view(), name = 'list_student_classes'),
     path('joinclasses/', views.StudentClassJoinView.as_view(), name = 'join_student_classes'),
     path('class/<int:pk>/', views.ClassView.as_view(), name="class_detail"),
+    path('class/<int:pk>/addnote/', views.AddNote, name = 'class_add_note'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

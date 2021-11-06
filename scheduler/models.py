@@ -7,6 +7,7 @@ from multiselectfield import MultiSelectField
 import datetime
 
 
+
 # Create your models here.
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = "profile", null=True)
@@ -16,6 +17,14 @@ class Profile(models.Model):
 	def __str__(self):
 		return self.user.username
 
+class NoteFile(models.Model):
+	note = models.FileField()
+	title = models.CharField(max_length=200, default='')
+	upload_time = models.DateTimeField(auto_now=True)
+	user = models.ManyToManyField(Profile)
+
+	def __str__(self):
+		return self.title
 
 #https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 @receiver(post_save, sender=User)
@@ -35,7 +44,7 @@ class StudentClass(models.Model):
 	end_time = models.TimeField(null=True)
 	location = models.CharField(max_length=200, default='')
 	enrolled_users_count = models.IntegerField(default=0)
-	
+	notes = models.ManyToManyField(NoteFile)
 	DAY_OF_THE_WEEK = (
 		("Sunday", "Sunday"),
 		("Monday", "Monday"),

@@ -2,11 +2,38 @@
 
 
 {% block content %}
-<h1>{{ object.class_name }}</h1>
+<h1 class="text-center">{{ object.class_name }}</h1>
 
 <div class="container">
-    <h3>{{ object.instructor }} {{object.location}}</h3>
+    <h3 class="text-center">Instructor: {{object.instructor}} &nbsp;&nbsp;&nbsp; Start: {{object.start_time}} &nbsp;&nbsp;&nbsp; End: {{object.end_time}} &nbsp;&nbsp;&nbsp; Location: {{object.location}} &nbsp;&nbsp;&nbsp; Days: {{object.days_of_the_week}}</h3>
 </div>
+
+<br>
+
+<div class="container text-center">
+    <form action="{% url 'class_add_note' object.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="form-label" for="formFile">Add note for this class (.pdf file)</label>
+        <br>
+        <input class="form-control-md" type="text" name="title" placeholder="Note Title">
+        <br>
+        <input class="form-control-md" type="file" accept=".pdf" id="formFile" name="noteFile">
+        <button type="submit" class="btn btn-primary btn-md btn-block">Submit note</button>
+    </form>
+    
+</div>
+
+<div class="container text-center">
+    <h3 class="text-center">Uploaded Notes</h3>
+    {% if files %}
+    <ul class="list-group text-center">
+        {% for file in files%}
+           <li class="list-group-item"><a href="{{ file.note.url }}" target="_blank">{{ file.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+    
 
 {% endblock %}
 

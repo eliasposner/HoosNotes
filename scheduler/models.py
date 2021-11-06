@@ -18,7 +18,7 @@ class Profile(models.Model):
 		return self.user.username
 
 class NoteFile(models.Model):
-	note = models.FileField()
+	file = models.FileField()
 	title = models.CharField(max_length=200, default='')
 	upload_time = models.DateTimeField(auto_now=True)
 	user = models.ManyToManyField(Profile)

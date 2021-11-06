@@ -80,7 +80,9 @@ class ClassView(DetailView):
 
 def AddNote(request, pk):
     studentclass = get_object_or_404(StudentClass, pk=pk)
-    note = NoteFile(note = request.FILES['noteFile'], title = request.POST['title'])
+    note = NoteFile(file = request.FILES['noteFile'], title = request.POST['title'])
+    if note.title == '':
+        note.title = note.file.name
     note.save()
     note.user.set([request.user.profile])
     note.save()

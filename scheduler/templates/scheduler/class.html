@@ -22,6 +22,17 @@
     </form>
     
 </div>
+
+<div class="container text-center">
+    <h3 class="text-center">Uploaded Notes</h3>
+    {% if files %}
+    <ul class="list-group text-center">
+        {% for file in files%}
+           <li class="list-group-item"><a href="{{ file.note.url }}" target="_blank">{{ file.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
     
 
 {% endblock %}

@@ -72,11 +72,17 @@ class StudentClassListView(ListView):
 class ClassView(DetailView):
     model = StudentClass
     template_name = 'scheduler/class.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['files'] = self.object.notes.filter(user = self.request.user.profile)
+        return context
 
 
 def AddNote(request, pk):
     studentclass = get_object_or_404(StudentClass, pk=pk)
     note = NoteFile(note = request.FILES['noteFile'], title = request.POST['title'])
+    note.save()
+    note.user.set([request.user.profile])
     note.save()
     studentclass.notes.add(note)
     studentclass.save()

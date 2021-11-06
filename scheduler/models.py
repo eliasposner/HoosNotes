@@ -7,10 +7,6 @@ from multiselectfield import MultiSelectField
 import datetime
 
 
-class NoteFile(models.Model):
-	note = models.FileField()
-	title = models.CharField(max_length=200, default='')
-	upload_time = models.DateTimeField(auto_now=True)
 
 # Create your models here.
 class Profile(models.Model):
@@ -21,7 +17,11 @@ class Profile(models.Model):
 	def __str__(self):
 		return self.user.username
 
-
+class NoteFile(models.Model):
+	note = models.FileField()
+	title = models.CharField(max_length=200, default='')
+	upload_time = models.DateTimeField(auto_now=True)
+	user = models.ManyToManyField(Profile)
 #https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

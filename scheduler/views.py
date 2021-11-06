@@ -7,7 +7,7 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from scheduler.models import StudentClass, Profile
+from scheduler.models import StudentClass, Profile, NoteFile
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -16,7 +16,7 @@ from django.views.generic.list import ListView
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.urls import reverse
 class IndexView(TemplateView):
     template_name = 'scheduler/index.html'
 
@@ -72,6 +72,16 @@ class StudentClassListView(ListView):
 class ClassView(DetailView):
     model = StudentClass
     template_name = 'scheduler/class.html'
+
+
+def AddNote(request, pk):
+    studentclass = get_object_or_404(StudentClass, pk=pk)
+    note = NoteFile(note = request.FILES['noteFile'], title = request.POST['title'])
+    note.save()
+    studentclass.notes.add(note)
+    studentclass.save()
+    return HttpResponseRedirect(reverse('class_detail', args=(studentclass.id,)))
+
 '''
 def classpage(request, class_id):
     desiredClass = get_object_or_404(StudentClass, pk=class_id)

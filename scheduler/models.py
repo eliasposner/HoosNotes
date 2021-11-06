@@ -7,6 +7,11 @@ from multiselectfield import MultiSelectField
 import datetime
 
 
+class NoteFile(models.Model):
+	note = models.FileField()
+	title = models.CharField(max_length=200, default='')
+	upload_time = models.DateTimeField(auto_now=True)
+
 # Create your models here.
 class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = "profile", null=True)
@@ -35,7 +40,7 @@ class StudentClass(models.Model):
 	end_time = models.TimeField(null=True)
 	location = models.CharField(max_length=200, default='')
 	enrolled_users_count = models.IntegerField(default=0)
-	
+	notes = models.ManyToManyField(NoteFile)
 	DAY_OF_THE_WEEK = (
 		("Sunday", "Sunday"),
 		("Monday", "Monday"),

@@ -169,6 +169,7 @@ STATIC_URL = '/static/'
 
 # Code for adding static & media folder directories from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
+MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

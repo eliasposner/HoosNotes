@@ -12,14 +12,39 @@
 
 <body>
     {% block content %}
-    <h1>My Google Login Project</h1>
+
     {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
+    <p class="text-center">Welcome, {{ user.username }} !</p>
+    <p class="text-center">Here's your todo list: </p>
+
+    <div class="text-center">
+
+    <form action="/addTodoItem/" method = "post">{% csrf_token %}
+        <input type="text" name="content">
+        <input type="submit" value="+">
+    </form> 
+
+    <ul class="list-group">
+    {% for i in all_items %} 
+        <li class="list-group-item" style="float:left;">{{i.content}} &nbsp;
+            <table>
+                <tr>
+                    <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+                    <input class= "btn btn-outline-danger btn-sm" type="submit" value="x" style="padding: 0.1vh 1vh 0.1vh 1vh;">
+                    </form>
+                </tr>
+            </table>
+        </li>
+    {% endfor %}
+    </ul>
+
+    </div>
 
     {% else %}
     <a href="{% provider_login_url 'google' %}">Login with Google</a>
     {% endif %}
     {% endblock %}
+
 </body>
 
 </html>

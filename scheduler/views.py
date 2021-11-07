@@ -7,7 +7,7 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from scheduler.models import StudentClass, Profile, NoteFile
+from scheduler.models import StudentClass, Profile, NoteFile, TodoListItem
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -17,8 +17,6 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
-class IndexView(TemplateView):
-    template_name = 'scheduler/index.html'
 
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
@@ -29,6 +27,36 @@ def post(self, request, *args, **kwargs):
         response = super(GoogleLogin, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['key'])
         return Response({'token': token.key, 'id': token.user_id})
+
+# todoappView, a function based view for displaying TodoListItems the user has created
+# Adapted from Ashwin Joy
+# URL: https://pythonistaplanet.com/to-do-list-app-using-django/
+def todoappView(request):
+    if request.user.is_anonymous:
+        return render(request, 'scheduler/index.html')
+    q1 = Profile.objects.filter(user=request.user)[0]
+    user_todo_items = q1.todolistitem_set.all()
+    return render(request, 'scheduler/index.html', {'all_items':user_todo_items}) 
+
+
+# addTodoView, a function based view for adding TodoListItems
+# Adapted from Ashwin Joy
+# URL: https://pythonistaplanet.com/to-do-list-app-using-django/
+def addTodoView(request):
+    new_item = TodoListItem(content = request.POST['content'])
+    new_item.save()
+    new_item.users.add(request.user.profile)
+    new_item.save()
+    return HttpResponseRedirect('/') 
+
+
+# deleteTodoView, a function based view for deleting TodoListItems
+# Adapted from Ashwin Joy 
+# URL: https://pythonistaplanet.com/to-do-list-app-using-django/
+def deleteTodoView(request, i):
+    todo_item = TodoListItem.objects.get(id=i)
+    todo_item.delete()
+    return HttpResponseRedirect('/') 
 
 # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')

@@ -89,5 +89,19 @@ class TodoListItem(models.Model):
     def __str__(self):
     	return self.content
 
-	
+# Event model, a model containing information about events the user has scheduled
+# Adapted from Hui Wen, 7/24/2018 and 7/29/2018
+# URLs: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html and https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+class Event(models.Model):
+	title = models.CharField(max_length=200)
+	description = models.TextField()
+	start_time = models.DateTimeField()
+	end_time = models.DateTimeField()
 
+	@property
+	def get_html_url(self):
+		url = reverse('event_edit', args=(self.id,))
+		return f'<a href="{url}"> {self.title} </a>'
+
+	def __str__(self):
+		return self.title

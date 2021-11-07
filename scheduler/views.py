@@ -1,13 +1,15 @@
 from django.contrib.auth.models import User
 from django.db.models.fields import GenericIPAddressField
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, reverse
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from scheduler.models import StudentClass, Profile, NoteFile, TodoListItem
+from scheduler.models import StudentClass, Profile, NoteFile, TodoListItem, Event
+from .utils import Calendar
+from .forms import EventForm
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -16,7 +18,9 @@ from django.views.generic.list import ListView
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.urls import reverse
+from django.utils.safestring import mark_safe
+from datetime import datetime, timedelta, date
+import calendar
 
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
@@ -56,7 +60,87 @@ def addTodoView(request):
 def deleteTodoView(request, i):
     todo_item = TodoListItem.objects.get(id=i)
     todo_item.delete()
-    return HttpResponseRedirect('/') 
+    return HttpResponseRedirect('/')
+
+# CalendarView, a view that takes all the events a user has submitted and returns it in calendar format
+# Allows user to scroll between the current, previous, and next month
+# Adapted from Hui Wen, 7/24/2018 and 7/29/2018
+# URLs: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html and https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+class CalendarView(generic.ListView):
+    model = Event
+    template_name = 'scheduler/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # use today's date for the calendar
+        d = get_date(self.request.GET.get('month', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
+        return context
+
+# Helper function for CalendarView that returns a datetime object of the current day
+# From Hui Wen, 7/29/2018
+# URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+# Helper function for CalendarView that, given a datetime object, returns the previous month
+# From Hui Wen, 7/29/2018
+# URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+# Helper function for CalendarView that, given a datetime object, returns the next month
+# From Hui Wen, 7/29/2018
+# URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+def next_month(d):
+    days_in_month = calendar.monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
+
+# event, a function based view that displays the event submission form and updates the Event model table based on user input
+# code for obtaining instance, saving form, and rendering the request is adapted from Hui Wen, 7/29/2018, https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+# code for deleting event is adapted from BenjaminAm, 1/11/2021, https://github.com/huiwenhw/django-calendar/issues/10
+def event(request, event_id=None):
+    instance = Event()
+    if event_id:
+        instance = get_object_or_404(Event, pk=event_id)
+    else:
+        instance = Event()
+    
+    form = EventForm(request.POST or None, instance=instance)
+
+
+    ## Delete functionality adapted from BejaminAm, https://github.com/huiwenhw/django-calendar/issues/10 ##
+    
+    # if user presses the save button
+    if request.POST and 'save' in request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('calendar'))
+    # if user presses the delete button
+    if request.POST and 'delete' in request.POST:
+        if event_id:
+            Event.objects.filter(pk=event_id).delete()
+            return HttpResponseRedirect(reverse('calendar'))
+
+    return render(request, 'scheduler/event.html', {'form': form})
+
 
 # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
@@ -73,7 +157,6 @@ class StudentClassCreateView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
-
 class StudentClassJoinView(CreateView):
     model = StudentClass
     fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location', 'days_of_the_week']

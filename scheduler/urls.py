@@ -19,6 +19,9 @@ urlpatterns = [
     path('joinclasses/', views.StudentClassJoinView.as_view(), name = 'join_student_classes'),
     path('addTodoItem/', views.addTodoView),
     path('deleteTodoItem/<int:i>/', views.deleteTodoView),
+    path('calendar/', views.CalendarView.as_view(), name='calendar'),
+    path('event/new/', views.event, name='event_new'),
+    path('event/edit/<int:event_id>/', views.event, name='event_edit'),
     path('class/<int:pk>/', views.ClassView.as_view(), name="class_detail"),
     path('class/<int:pk>/addnote/', views.AddNote, name = 'class_add_note'),
 ]

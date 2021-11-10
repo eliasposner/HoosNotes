@@ -172,4 +172,10 @@ class TodoListItemTest(TestCase):
 		self.assertFalse(self.todo_item2a in user1_todo_items)
 
 
+class NoteFileTest(TestCase):
+
+	def setUp(self):
+		testUser1 = User.objects.create_user(username='testUser1', password='t3stpassw0rd1', email='testUser1@email.com')
+		testUser2 = User.objects.create_user(username='testUser2', password='t3stpassw0rd2', email='testUser2@email.com')
+		
 

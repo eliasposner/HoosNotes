@@ -4,16 +4,26 @@
 	URLs: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html and https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
 -->
 
-
+<style>
+#tblcontent{
+  margin-bottom: 75px;
+}
+</style>
 {% extends "scheduler/calendar_base.html" %}
 
 {% block content %}
 
 {% include "base.html" %}
+
 <div class="clearfix">
   <a class="btn btn-outline-primary left" href="{% url 'calendar' %}?{{ prev_month }}"> Previous Month </a>
   <a class="btn btn-outline-primary right" href="{% url 'calendar' %}?{{ next_month }}"> Next Month </a>
   <a class="btn btn-outline-primary right" href="{% url 'event_new' %}"> New Event </a>
 </div>
-{{ calendar }}
+
+<div id="tblcontent">
+  {{ calendar }}
+</div>
+
+
 {% endblock %}

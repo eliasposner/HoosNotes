@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db.models.fields import GenericIPAddressField
+from django.conf import settings
+from django.http import JsonResponse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, reverse
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -7,7 +9,7 @@ from rest_auth.registration.views import SocialLoginView
 from rest_framework import authentication, permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from scheduler.models import StudentClass, Profile, NoteFile, TodoListItem, Event
+from scheduler.models import StudentClass, Profile, NoteFile, TodoListItem, Event, Room
 from .utils import Calendar
 from .forms import EventForm
 from django.views.generic.base import TemplateView
@@ -21,6 +23,8 @@ from django.utils.decorators import method_decorator
 from django.utils.safestring import mark_safe
 from datetime import datetime, timedelta, date
 import calendar
+from twilio.jwt.access_token import AccessToken
+from twilio.jwt.access_token.grants import ChatGrant
 
 # Code for returning a token given the Google Access code from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
@@ -127,12 +131,14 @@ def event(request, event_id=None):
     form = EventForm(request.POST or None, instance=instance)
 
 
-    ## Delete functionality adapted from BejaminAm, https://github.com/huiwenhw/django-calendar/issues/10 ##
+    # Delete functionality adapted from BejaminAm, 1/11/2021
+    # https://github.com/huiwenhw/django-calendar/issues/10
     
     # if user presses the save button
     if request.POST and 'save' in request.POST and form.is_valid():
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
+
     # if user presses the delete button
     if request.POST and 'delete' in request.POST:
         if event_id:
@@ -142,13 +148,16 @@ def event(request, event_id=None):
     return render(request, 'scheduler/event.html', {'form': form})
 
 
-# https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class StudentClassCreateView(CreateView):
     model = StudentClass
     fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location', 'days_of_the_week']
     template_name = 'scheduler/createclass.html'
     success_url = '/listclasses'
+
+    # Form validation
+    # Adapted from user zaidfazil, 9/23/2017
+    # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
     def form_valid(self, form):
         self.object = form.save()
         self.object.users.add(self.request.user.profile)
@@ -170,7 +179,6 @@ class StudentClassJoinView(CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
-
 class StudentClassListView(ListView):
     model = Profile
     template_name = 'scheduler/listclass.html'
@@ -207,6 +215,54 @@ def classpage(request, class_id):
     return HttpResponseRedirect(reverse('scheduler:class', args = (desiredClass.id,)))
 '''
 
+
+# all_rooms, a function based view that displays all the chat rooms a user is in
+# From Kevin Ndung'u, 5/15/2018
+# https://www.twilio.com/blog/2018/05/build-chat-python-django-applications-programmable-chat.html
+@login_required(login_url='/accounts/google/login')
+def all_rooms(request):
+    rooms = Room.objects.all()
+    return render(request, 'chat/index.html', {'rooms': rooms})
+
+# room_detail, a function based view that displays the messages in a chat room
+# From Kevin Ndung'u, 5/15/2018
+# https://www.twilio.com/blog/2018/05/build-chat-python-django-applications-programmable-chat.html
+@login_required(login_url='/accounts/google/login')
+def room_detail(request, slug):
+    room = Room.objects.get(slug=slug)
+    return render(request, 'chat/room_detail.html', {'room': room})
+
+
+# token, a view that allows the app to assign unique tokens to users
+# From Kevin Ndung'u, 5/15/2018
+# https://www.twilio.com/blog/2018/05/build-chat-python-django-applications-programmable-chat.html
+@login_required(login_url='/accounts/google/login')
+def token(request):
+    identity = request.GET.get('identity', request.user.username)
+    device_id = request.GET.get('device', 'default')  # unique device ID
+
+    account_sid = settings.TWILIO_ACCOUNT_SID
+    api_key = settings.TWILIO_API_KEY
+    api_secret = settings.TWILIO_API_SECRET
+    chat_service_sid = settings.TWILIO_CHAT_SERVICE_SID
+
+    token = AccessToken(account_sid, api_key, api_secret, identity=identity)
+
+    # Create a unique endpoint ID for the device
+    endpoint = "MyDjangoChatRoom:{0}:{1}".format(identity, device_id)
+
+    if chat_service_sid:
+        chat_grant = ChatGrant(endpoint_id=endpoint,
+                               service_sid=chat_service_sid)
+        token.add_grant(chat_grant)
+
+    response = {
+        'identity': identity,
+        'token': token.to_jwt()
+    }
+
+    return JsonResponse(response)
+
 # Code for logout functionality. Deletes both the regular token and social token (if it exists) when the user sends a logout request
 # Adapted from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0
@@ -222,6 +278,7 @@ def User_logout(request):
     request.user.auth_token.delete()
 
     logout(request)
+
 
     return Response('User Logged out successfully')
 

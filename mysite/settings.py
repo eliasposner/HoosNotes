@@ -176,6 +176,7 @@ TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', None)
 TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', None)
 TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', None)
 
+
 # Code for adding static & media folder directories from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 MEDIA_URL = '/media/'

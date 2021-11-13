@@ -171,10 +171,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 STATIC_URL = '/static/'
 
-TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', None)
-TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', None)
-TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', None)
-TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', None)
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'ACee4a95ba8a6b85b49f873fda7a97698e')
+TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', 'SK6369f319577d9bc4d4f4460f32dab412')
+TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', 'yM99TM9vdjajPkt6vr69ZslqCD1xXhuX')
+TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', 'IS0f778b5373fd40b2866c2e60d727f868')
 
 
 # Code for adding static & media folder directories from Mudh Rahiman, 2/27/2021

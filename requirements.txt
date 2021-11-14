@@ -7,3 +7,5 @@ django-rest-auth
 django-bootstrap-v5 
 django-multiselectfield
 django-cleanup
+twilio==6.10.1
+python-dotenv

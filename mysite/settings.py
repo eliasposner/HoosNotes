@@ -13,9 +13,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import django_heroku
 import os, sys
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+dotenv_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path)
 
 
 # Quick-start development settings - unsuitable for production
@@ -170,6 +174,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 STATIC_URL = '/static/'
+
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID', 'ACee4a95ba8a6b85b49f873fda7a97698e')
+TWILIO_API_KEY = os.environ.get('TWILIO_API_KEY', 'SK6369f319577d9bc4d4f4460f32dab412')
+TWILIO_API_SECRET = os.environ.get('TWILIO_API_SECRET', 'yM99TM9vdjajPkt6vr69ZslqCD1xXhuX')
+TWILIO_CHAT_SERVICE_SID = os.environ.get('TWILIO_CHAT_SERVICE_SID', 'IS0f778b5373fd40b2866c2e60d727f868')
+
 
 # Code for adding static & media folder directories from Mudh Rahiman, 2/27/2021
 # https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8

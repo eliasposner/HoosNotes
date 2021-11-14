@@ -78,6 +78,7 @@ class StudentClass(models.Model):
 	def __str__(self):
 		return self.class_name
 
+
 # TodoListItem model, a model representing a single task on a todolist
 # The model keeps track of the contents of the task, and the user who created the task
 # Adapted from Ashwin Joy,
@@ -97,6 +98,7 @@ class Event(models.Model):
 	description = models.TextField()
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
+	users = models.ManyToManyField(Profile)
 
 	@property
 	def get_html_url(self):
@@ -105,3 +107,17 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.title
+
+# Room model, a model for storing details about each chat room
+# Author: Kevin Ndung'u
+# Date: 5/15/2018
+# URL: https://www.twilio.com/blog/2018/05/build-chat-python-django-applications-programmable-chat.html
+class Room(models.Model):
+    """Represents chat rooms that users can join"""
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+    slug = models.CharField(max_length=50)
+
+    def __str__(self):
+        """Returns human-readable representation of the model instance."""
+        return self.name

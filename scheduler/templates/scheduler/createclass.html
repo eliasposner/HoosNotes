@@ -16,8 +16,35 @@
 <div class="mt-lg-4">
 
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save Class">
+    <!--{{ form.as_p }}-->
+
+    <p><label for="id_class_name">Class Name:</label>
+    <input id="id_class_name" type="text" name="class_name" maxlength="200" required></p>
+
+    <p><label for="id_instructor">Instructor:</label>
+    <input id="id_instructor" type="text" name="instructor" maxlength="200" required></p>
+    
+    <p><label for="id_start_time">Start Time:</label>
+    <input id="id_start_time" type="text" name="start_time" required></p>
+
+    <p><label for="id_end_time">End Time:</label>
+    <input id="id_end_time" type="text" name="end_time" required></p>
+
+    <p><label for="id_location">Location:</label>
+    <input id="id_location" type="text" name="location" maxlength="200" required></p>
+
+    Days of the Week: &emsp;
+    {% for value, text in form.days_of_the_week.field.choices %}
+
+    <input id="id_days_of_the_week_{{ forloop.counter0 }}" name="{{ form.days_of_the_week.name }}" type="checkbox" value="{{ value }}" {% if value in checked_days_of_the_week %} checked="checked"{% endif %}>
+    <label>{{ text }}</label>
+
+    {% endfor %}
+
+    <br>
+    <br>
+
+    <input class="btn btn-outline-success" type="submit" value="Save Class">
 </form>
 </center>
 {% endblock %}

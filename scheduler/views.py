@@ -81,7 +81,7 @@ class CalendarView(generic.ListView):
         d = get_date(self.request.GET.get('month', None))
 
         # Instantiate our calendar class with today's year and date
-        cal = Calendar(d.year, d.month)
+        cal = Calendar(self.request.user.profile, d.year, d.month)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
@@ -89,6 +89,9 @@ class CalendarView(generic.ListView):
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         return context
+
+    def get_queryset(self):
+        return Event.objects.filter(users=self.request.user.profile)
 
 # Helper function for CalendarView that returns a datetime object of the current day
 # From Hui Wen, 7/29/2018
@@ -136,6 +139,9 @@ def event(request, event_id=None):
     
     # if user presses the save button
     if request.POST and 'save' in request.POST and form.is_valid():
+        instance.save()
+        instance.users.add(request.user.profile)
+        instance.save()
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
 

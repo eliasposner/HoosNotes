@@ -98,6 +98,7 @@ class Event(models.Model):
 	description = models.TextField()
 	start_time = models.DateTimeField()
 	end_time = models.DateTimeField()
+	users = models.ManyToManyField(Profile)
 
 	@property
 	def get_html_url(self):

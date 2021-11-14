@@ -4,12 +4,6 @@
 {% block content %}
 <h1 class="text-center">{{ object.class_name }}</h1>
 
-<div class="container">
-    <h3 class="text-center">Instructor: {{object.instructor}} &nbsp;&nbsp;&nbsp; Start: {{object.start_time}} &nbsp;&nbsp;&nbsp; End: {{object.end_time}} &nbsp;&nbsp;&nbsp; Location: {{object.location}} &nbsp;&nbsp;&nbsp; Days: {{object.days_of_the_week}}</h3>
-</div>
-
-<br>
-
 <div class="container text-center">
     <form action="{% url 'class_add_note' object.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}

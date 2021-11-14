@@ -24,6 +24,7 @@ urlpatterns = [
     path('event/edit/<int:event_id>/', views.event, name='event_edit'),
     path('class/<int:pk>/', views.ClassView.as_view(), name="class_detail"),
     path('class/<int:pk>/addnote/', views.AddNote, name = 'class_add_note'),
+    path('class/<int:pk>/deletenote/<int:id>', views.DeleteNote, name = 'class_delete_note'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

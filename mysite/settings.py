@@ -56,7 +56,11 @@ INSTALLED_APPS = [
     # Code for configuring django REST framework applications
     # https://www.django-rest-framework.org/
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    
+    # Code for deleting media files when the model that uses them is deleted
+    #  https://github.com/un1t/django-cleanup
+    'django_cleanup.apps.CleanupConfig',
 
 
 ]

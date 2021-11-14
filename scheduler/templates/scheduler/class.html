@@ -28,7 +28,16 @@
     {% if files %}
     <ul class="list-group text-center">
         {% for file in files%}
-           <li class="list-group-item"><a href="{{ file.note.url }}" target="_blank">{{ file.title }}</a></li>
+        <li class="list-group-item">
+            <a href="{{ file.note.url }}" target="_blank">{{ file.title }}</a>
+            <table>
+                <tr>
+                    <form action="{% url 'class_delete_note' file.id object.id%}" method = "post">{% csrf_token %}
+                    <input class= "btn btn-outline-danger btn-sm" type="submit" value="x" style="padding: 0.1vh 1vh 0.1vh 1vh;">
+                    </form>
+                </tr>
+            </table>
+        </li>
         {% endfor %}
     </ul>
     {% endif %}

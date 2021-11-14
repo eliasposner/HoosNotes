@@ -215,6 +215,10 @@ def AddNote(request, pk):
     studentclass.save()
     return HttpResponseRedirect(reverse('class_detail', args=(studentclass.id,)))
 
+def DeleteNote(request, pk, id):
+    note = get_object_or_404(NoteFile, pk=pk)
+    note.delete()
+    return HttpResponseRedirect(reverse('class_detail', args=(id,)))
 '''
 def classpage(request, class_id):
     desiredClass = get_object_or_404(StudentClass, pk=class_id)

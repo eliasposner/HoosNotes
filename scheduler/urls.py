@@ -19,6 +19,7 @@ urlpatterns = [
     path('event/edit/<int:event_id>/', views.event, name='event_edit'),
     path('class/<int:pk>/', views.ClassView.as_view(), name="class_detail"),
     path('class/<int:pk>/addnote/', views.AddNote, name = 'class_add_note'),
+    path('class/<int:pk>/deletenote/<int:id>', views.DeleteNote, name = 'class_delete_note'),
     path('rooms', views.all_rooms, name="all_rooms"),
     url(r'token$', views.token, name="token"),
     url(r'rooms/(?P<slug>[-\w]+)/$', views.room_detail, name="room_detail"),

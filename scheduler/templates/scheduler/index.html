@@ -46,7 +46,7 @@
 
 
 
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    <!--<a href="{% provider_login_url 'google' %}">Login with Google</a>-->
     <!--<div class="row d-flex justify-content-center align-items-center h-100">
         <div class="card text-center border-dark w-50 h-10">
             <div class="card-body">
@@ -62,7 +62,22 @@
             </div>
         </div>
     </div>-->
+    
+    <div class="d-flex justify-content-center h-75 align-items-center">
+        <div class="jumbotron my-auto">
+        <div class="card shadow" style="border-radius: 1rem;">
+          <div class="card-body text-center">
 
+            <h3 class="mb-4">Welcome to HoosNotes!</h3>
+
+            <h5>To create an account or sign in with an existing one, please click: </h5>
+            <a class="btn btn-lg btn-block btn-outline-danger" href="{% provider_login_url 'google' %}" type="submit">Log in with Google</a>
+
+
+          </div>
+        </div>
+        </div>
+    </div>
 
     {% endif %}
     {% endblock %}

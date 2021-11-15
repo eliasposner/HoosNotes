@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from scheduler.models import StudentClass, Profile, NoteFile, TodoListItem, Event, Room
 from .utils import Calendar
-from .forms import EventForm
+from .forms import EventForm, JoinForm
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
@@ -171,18 +171,45 @@ class StudentClassCreateView(CreateView):
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
+
+    # Form validation
+    # Adapted from user zaidfazil, 9/23/2017
+    # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
+#class StudentClassJoinView(CreateView):
+    #model = StudentClass
+    #fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location', 'days_of_the_week']
+    #template_name = 'scheduler/joinclass.html'
+    #success_url = '/joinclasses'
+    #def form_valid(self, form):
+        #self.object = form.save()
+        #self.object.users.add(self.request.user.profile)
+        #self.object.enrolled_users_count += 1
+        #self.object.save()
+        #return HttpResponseRedirect(self.get_success_url())
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
-class StudentClassJoinView(CreateView):
+
+class JoinClassListView(ListView):   
     model = StudentClass
-    fields = ['class_name', 'instructor', 'start_time', 'end_time', 'location', 'days_of_the_week']
     template_name = 'scheduler/joinclass.html'
-    success_url = '/joinclasses'
-    def form_valid(self, form):
-        self.object = form.save()
-        self.object.users.add(self.request.user.profile)
-        self.object.enrolled_users_count += 1
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+    context_object_name = 'join_list_of_classes'
+    success_url = '/listclasses'
+    def get_queryset(self):
+        return StudentClass.objects.all()
+
+class JoinClassView(DetailView):
+    model = StudentClass
+    template_name = 'scheduler/join.html'
+    success_url = '/listclasses'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+def add_join_class(request, pk):
+    studentclass = get_object_or_404(StudentClass, pk=pk)
+    studentclass.users.add(request.user.profile)
+    studentclass.enrolled_users_count += 1
+    studentclass.save()
+    return HttpResponseRedirect('/listclasses')
 
 @method_decorator(login_required(login_url='/accounts/google/login'), name='dispatch')
 class StudentClassListView(ListView):
@@ -201,7 +228,6 @@ class ClassView(DetailView):
         context = super().get_context_data(**kwargs)
         context['files'] = self.object.notes.filter(user = self.request.user.profile)
         return context
-
 
 def AddNote(request, pk):
     studentclass = get_object_or_404(StudentClass, pk=pk)

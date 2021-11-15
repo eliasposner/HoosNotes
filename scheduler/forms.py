@@ -4,7 +4,8 @@
 # URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
 
 from django.forms import ModelForm, DateInput
-from .models import Event
+from .models import Event, StudentClass
+from django import forms
 
 class EventForm(ModelForm):
   class Meta:
@@ -21,3 +22,7 @@ class EventForm(ModelForm):
     # input_formats to parse HTML5 datetime-local input to datetime field
     self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
     self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+
+class JoinForm(forms.Form):
+    classes = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                          choices=StudentClass.objects.all())

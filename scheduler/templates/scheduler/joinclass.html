@@ -3,14 +3,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<br> 
 <div class="container">
   <div class="row">
- 
 
+<h3 class="text-left"><br> Pick a Class to Join</h3>
 	<div class="col-sm-4" style="background-color: #00000">
 		<p style="border:10px; padding: 0em;">
-		<li class="list-group-item" style="border:5px; border-style:solid; border-color: #00000; padding: 2em;">
+		<li class="list-group-item" style="border:5px; height: 300; font-size: 100%; border-style:solid; border-color: #00000; padding: 2em;">
 		
 		<h4> 
 		
@@ -34,7 +33,7 @@
     {% for class in join_list_of_classes %}
 		<div class="col-sm-4" style="background-color: #00000">
 		<p style="border:10px; padding: 0em;">
-		<li class="list-group-item" style="border:5px; border-style:solid; border-color: #007FFF; padding: 2em;">
+		<li class="list-group-item" style="border:5px; height: 300; text-size-adjust: auto; border-style:solid; border-color: #007FFF; padding: 2em;">
 		
 		<h4> 
 		<a class="link-primary" href="{% url 'join_class_detail' class.id %}"> 
@@ -43,7 +42,7 @@
 		</h4> 
 
 		<p class="text-dark"> 
-			Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> Days: {{class.days_of_the_week}} 
+			Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> 
        	</p>
        </li>
        </p>

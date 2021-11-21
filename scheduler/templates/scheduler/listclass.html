@@ -2,9 +2,73 @@
 
 {% block content %}
 {% if list_of_classes %}
+
+
+
+<div class="container">
+  <div class="row">
+<h3 class="text-left"><br> Your Classes</h3>
+
+ 		<div class="col-sm-4" style="background-color: #00000">
+		<p style="border:10px; padding: 0em;">
+		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: #00000; padding: 2em;">
+		
+		<h4> 
+		
+			<br>
+			<br>
+			<a class="link-dark" href="{% url 'create_student_class'%}">
+			Add a Class +
+			<br>
+			<br>
+			<br>
+
+		</a> 
+		</h4> 
+		</li>
+       	</p>
+       	</div>
+
+       	<div class="col-sm-4" style="background-color: #00000">
+		<p style="border:10px; padding: 0em;">
+		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: #00000; padding: 2em;">
+		
+		<h4> 
+		
+			<br>
+			<br>
+			<a class="link-dark" href="{% url 'join_student_classes'%}">
+			Join a Class +
+			<br>
+			<br>
+			<br>
+
+		</a> 
+		</h4> 
+		</li>
+       	</p>
+       	</div>
+
     {% for class in list_of_classes %}
-        <li class="list-group-item"><a class="link-primary" href="{% url 'class_detail' class.id %}"> Class: {{class.class_name}}</a>&nbsp;&nbsp;&nbsp; Instructor: {{class.instructor}} &nbsp;&nbsp;&nbsp; Start: {{class.start_time}} &nbsp;&nbsp;&nbsp; End: {{class.end_time}} &nbsp;&nbsp;&nbsp; Location: {{class.location}} &nbsp;&nbsp;&nbsp; Days: {{class.days_of_the_week}} </li>
+        <div class="col-sm-4" style="background-color: #00000;">
+		<p style="border:10px; padding: 0em;">
+		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: #007FFF; padding: 2em;">
+		
+		<h4> 
+		<a class="link-primary" href="{% url 'class_detail' class.id %}"> 
+			{{class.class_name}}
+		</a> 
+		</h4> 
+
+		<p class="text-dark"> 
+			Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> 
+       </p>
+       </li>
+       </p>
+       </div>
     {% endfor %}
+  </div>
+</div>
 {% else %}  
     <p>No Classes are available.</p>  
 {% endif %}

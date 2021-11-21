@@ -91,7 +91,10 @@ class CalendarView(generic.ListView):
         return context
 
     def get_queryset(self):
-        return Event.objects.filter(users=self.request.user.profile)
+        q1 = Profile.objects.filter(user = self.request.user)[0]
+        return q1.event_set.all()
+        #return Event.objects.filter(users=self.request.user.profile)
+
 
 # Helper function for CalendarView that returns a datetime object of the current day
 # From Hui Wen, 7/29/2018

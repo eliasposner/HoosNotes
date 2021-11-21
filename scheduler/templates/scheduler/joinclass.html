@@ -3,17 +3,57 @@
 {% extends "base.html" %}
 
 {% block content %}
+<br> 
+<div class="container">
+  <div class="row">
+ 
 
-<p style="border:5px; border-style:solid; border-color:#007FFF; padding: 1em;">
-  Pick a class to join.<br>If you do not see your class, please add it using the "Add Class" functionality under "My Classes."
-</p>
+	<div class="col-sm-4" style="background-color: #00000">
+		<p style="border:10px; padding: 0em;">
+		<li class="list-group-item" style="border:5px; border-style:solid; border-color: #00000; padding: 2em;">
+		
+		<h4> 
+		
+			<br>
+			Don't see your class? 			
+			<br>
+			<a class="link-dark" href="{% url 'create_student_class'%}">
+			Add a Class +
+			<br>
+			<br>
+			<br>
 
+		</a> 
+		</h4> 
+		</li>
+       	</p>
+       	</div>
 
 {% if join_list_of_classes %}
+    
     {% for class in join_list_of_classes %}
-        <li class="list-group-item"><a class="link-primary" href="{% url 'join_class_detail' class.id %}"> Class: {{class.class_name}}</a>&nbsp;&nbsp;&nbsp; Instructor: {{class.instructor}} &nbsp;&nbsp;&nbsp; Start: {{class.start_time}} &nbsp;&nbsp;&nbsp; End: {{class.end_time}} &nbsp;&nbsp;&nbsp; Location: {{class.location}} &nbsp;&nbsp;&nbsp; Days: {{class.days_of_the_week}} </li>
+		<div class="col-sm-4" style="background-color: #00000">
+		<p style="border:10px; padding: 0em;">
+		<li class="list-group-item" style="border:5px; border-style:solid; border-color: #007FFF; padding: 2em;">
+		
+		<h4> 
+		<a class="link-primary" href="{% url 'join_class_detail' class.id %}"> 
+			{{class.class_name}}
+		</a> 
+		</h4> 
+
+		<p class="text-dark"> 
+			Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> Days: {{class.days_of_the_week}} 
+       	</p>
+       </li>
+       </p>
+       </div>
+       
     {% endfor %}
+  
 {% else %}  
     <p>No Classes are available.</p>  
 {% endif %}
+</div>
+</div>
 {% endblock %}

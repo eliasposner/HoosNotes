@@ -164,6 +164,14 @@ class StudentClassCreateView(CreateView):
     template_name = 'scheduler/createclass.html'
     success_url = '/listclasses'
 
+    def clean(self):
+        classes = StudentClass.objects.all()
+        for c in classes:
+            new = form.save(commit=False)
+            if (new.class_name.strip().upper() == c.class_name.strip().upper() and new.instructor.strip().upper() == c.instructor.strip().upper() and \
+                new.start_time == c.start_time and new.end_time == c.end_time):
+                raise ValidationError(
+            "The class you wish to add is already in the system. Please join this class through the \"Join Class\" page")
     # Form validation
     # Adapted from user zaidfazil, 9/23/2017
     # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio

@@ -46,6 +46,8 @@ def todoappView(request):
     user_todo_items = q1.todolistitem_set.all()
     return render(request, 'scheduler/index.html', {'all_items':user_todo_items}) 
 
+def joinclassView(request):
+    return render(request, 'scheduler/joinclass.html')
 
 # addTodoView, a function based view for adding TodoListItems
 # Adapted from Ashwin Joy
@@ -201,7 +203,7 @@ class StudentClassCreateView(CreateView):
 
 class JoinClassListView(ListView):   
     model = StudentClass
-    template_name = 'scheduler/joinclass.html'
+    template_name = 'scheduler/all_classes.html'
     context_object_name = 'join_list_of_classes'
     success_url = '/listclasses'
     def get_queryset(self):
@@ -214,6 +216,13 @@ class JoinClassView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+class JoinClassFilterView(ListView):
+    model = StudentClass
+    template_name ='scheduler/filtered_classes.html'
+    context_object_name = "list_of_classes"
+    def get_queryset(self):
+        return StudentClass.objects.filter(instructor__icontains = self.kwargs['instructor'])
 
 def add_join_class(request, pk):
     studentclass = get_object_or_404(StudentClass, pk=pk)
@@ -256,6 +265,9 @@ def DeleteNote(request, pk, id):
     note = get_object_or_404(NoteFile, pk=pk)
     note.delete()
     return HttpResponseRedirect(reverse('class_detail', args=(id,)))
+
+def ClassSearch(request):
+    return HttpResponseRedirect(reverse('filtered_classes', args=(request.POST['instructor'], )))
 '''
 def classpage(request, class_id):
     desiredClass = get_object_or_404(StudentClass, pk=class_id)

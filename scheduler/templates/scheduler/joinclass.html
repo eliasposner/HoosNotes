@@ -6,53 +6,62 @@
 <div class="container">
   <div class="row">
 
-<h3 class="text-left" style = "color: white;"><br> Pick a Class to Join</h3>
-	<div class="col-sm-4" style="background-color: #00000">
+<h3 class="text-left" style = "color: white;"><br> Join Classes</h3>
+	<div class="col-sm-6 text-center">
 		<p style="border:10px; padding: 0em;">
 		<li class="list-group-item" style="border:5px; height: 300; font-size: 100%; border-style:solid; border-color: white; padding: 2em;">
 		
 		<h4> 
 		
 			<br>
-			Don't see your class? 			
-			<br>
-			<a class="link-dark" href="{% url 'create_student_class'%}">
-			Add a Class +
+			Search for a class by instructor.			
 			<br>
 			<br>
-			<br>
+			<form action="{% url 'class_search' %}" method="post">
+				{% csrf_token %}
+				<!--<div style="float: left;">
+					<input class="form-control-sm" type="text" name="class_name" placeholder="Class Name">
+				</div>
+			-->
+				<div class="text-center">
+					<input class="form-control-sm" type="text" name="instructor" placeholder="Instructor" required>
+				</div>
 
-		</a> 
+				<br>
+				<div class="text-center">
+					<button class="btn btn-primary btn-md btn-block" type="submit">Search</button> 
+				</div>
+				
+
+
+			</form>
+			
+			
+			<br>
+			<br>
+			<br>
 		</h4> 
 		</li>
        	</p>
-       	</div>
-
-{% if join_list_of_classes %}
-    
-    {% for class in join_list_of_classes %}
-		<div class="col-sm-4" style="background-color: #00000">
-		<p style="border:10px; padding: 0em;">
-		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
-		
-		<h4> 
-		<a class="link-primary" href="{% url 'join_class_detail' class.id %}"> 
-			{{class.class_name}}
-		</a> 
-		</h4> 
-
-		<p class="text-dark"> 
-			Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> 
-       	</p>
-       </li>
-       </p>
-       </div>
-       
-    {% endfor %}
-  
-{% else %}  
-    <p>No Classes are available.</p>  
-{% endif %}
-</div>
-</div>
+		</div>
+<div class="col-sm-6 text-center">
+	<p style="border:10px; padding: 0em;">
+	<li class="list-group-item" style="border:5px; height: 300; font-size: 100%; border-style:solid; border-color: white; padding: 2em;">
+	
+	<h4> 
+	
+		<br>
+		<br>
+		<br>
+		See the list of <a href="{% url 'all_classes' %}">all classes</a>		
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+	</h4> 
+	</li>
+		</p>
+		</div>
+		   
 {% endblock %}

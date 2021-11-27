@@ -9,7 +9,7 @@
 <div class="mt-lg-4">
 
 <div class="container">
-    	<h3 class="text-center">Add a Class</h6>
+    	<h3 class="text-center" style = "color: white;">Add a Class</h6>
 </div>
 
 <div class="mt-lg-4" style="width: fit-content;">
@@ -21,34 +21,34 @@
     <!--{{ form.as_p }}-->
     <div class="row">
         <div class="col">
-            <label for="id_class_name">Class Name:</label>
+            <label for="id_class_name" style = "color: white;">Class Name:</label>
             <input class="form-control" id="id_class_name" type="text" name="class_name" maxlength="200" required>
         </div>
         
         <div class="col">
-            <label for="id_instructor">Instructor:</label>
+            <label for="id_instructor" style = "color: white;">Instructor:</label>
             <input class="form-control" id="id_instructor" type="text" name="instructor" maxlength="200" required>
         </div>
         <div class="col">
-            <label for="id_location">Location:</label>
+            <label for="id_location" style = "color: white;">Location:</label>
             <input class="form-control" id="id_location" type="text" name="location" maxlength="200" required>
         </div>
             
         </div>
         <div class="row">
             <div class="col">
-                <label for="id_start_time">Start Time:</label>
+                <label for="id_start_time" style = "color: white;">Start Time:</label>
                 <input id="id_start_time" class="form-control" type="time" name="start_time" required>
             </div>
             <div class="col">
-                <label for="id_end_time">End Time:</label>
+                <label for="id_end_time" style = "color: white;">End Time:</label>
                 <input id="id_end_time" class="form-control" type="time" name="end_time" required>
             </div>
 
         </div>
         <br>
         <div class="row">
-            <div class="col">
+            <div class="col" style = "color: white;">
                 Days of the Week: &emsp;
                 {% for value, text in form.days_of_the_week.field.choices %}
             
@@ -65,7 +65,7 @@
 
     <br>
 
-    <input class="btn btn-outline-success" type="submit" value="Save Class">
+    <input class="btn btn-success" type="submit" value="Save Class">
 </form>
 </center>
 {% endblock %}

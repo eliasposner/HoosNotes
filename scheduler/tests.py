@@ -172,7 +172,7 @@ class TodoListItemTest(TestCase):
 		self.assertFalse(self.todo_item1a in user2_todo_items and self.todo_item1b in user2_todo_items)
 		self.assertFalse(self.todo_item2a in user1_todo_items)
 
-
+'''
 class NoteFileTest(TestCase):
 
 	def setUp(self):
@@ -194,13 +194,13 @@ class NoteFileTest(TestCase):
 		pdf2 = File(p2)
 		pdf3 = File(p3)
 
-		'''
+		
 		self.note1a = NoteFile.objects.create(note = 'Rplot.pdf', title = 'Rplot', upload_time = start1)
 		self.note1a.users.add(self.testProfile1)
 		self.note1b = NoteFile.objects.create(note = 'HW5.pdf', title = 'HW5', upload_time = start2)
 		self.note1b.users.add(self.testProfile1)
 		self.noteX = NoteFile.objects.create(note = 'test.pdf', title = 'Test', upload_time = start2)
-		'''
+		
 		self.note1a = NoteFile.objects.create(note = pdf1, title = 'test1', upload_time = start1)
 		self.note1a.users.add(self.testProfile1)
 		self.note1b = NoteFile.objects.create(note = pdf2, title = 'test2', upload_time = start2)
@@ -222,7 +222,7 @@ class NoteFileTest(TestCase):
 		self.assertFalse(self.note1a in user2_note_items and self.note1b in user2_note_items)
 		self.assertFalse(self.noteX in user1_todo_items)
 
-	
+'''	
 
 
 

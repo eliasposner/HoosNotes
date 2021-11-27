@@ -8,7 +8,7 @@
 {% block content %}
 <div class="col d-flex justify-content-center">
 {% for room in rooms %}
-<div class="card text-center border-dark w-50">
+<div class="card shadow text-center border-dark w-50" style="border-radius: 1rem; margin: 20px;">
   <div class="card-body">
     <h5 class="card-title">{{room.name}}</h5>
     <p class="card-text">{{room.description}}</p>

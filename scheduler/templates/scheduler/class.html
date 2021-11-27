@@ -2,41 +2,83 @@
 
 
 {% block content %}
-<h1 class="text-center">{{ object.class_name }}</h1>
+<h1 class="text-center text-white m-3">{{ object.class_name }}</h1>
 
-<div class="container text-center">
-    <form action="{% url 'class_add_note' object.id %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <label class="form-label" for="formFile">Add note for this class (.pdf file)</label>
-        <br>
-        <input class="form-control-md" type="text" name="title" placeholder="Note Title">
-        <br>
-        <input class="form-control-md" type="file" accept=".pdf" id="formFile" name="noteFile" required>
-        <button type="submit" class="btn btn-primary btn-md btn-block">Submit note</button>
-    </form>
-    
+<div class="row w-100">
+
+    <div class="col d-flex justify-content-center">
+
+        <div class="card w-75 text-center bg-light">
+            <div class="card-body">
+                <h4 class="card-title">Your Notes</h4>
+                <form action="{% url 'class_add_note' object.id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label class="form-label" for="formFile">Upload a .pdf file of your notes</label>
+                    <br>
+                    <input class="form-control-md" type="text" name="title" placeholder="Note Title">
+                    <br>
+                    <input class="form-control-md" type="file" accept=".pdf" id="formFile" name="noteFile" required>
+                    <button type="submit" class="btn btn-primary btn-md btn-block">Submit note</button>
+                </form>
+                {% if files %}
+                    <ul class="list-group text-center">
+                    {% for file in files%}
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <form action="{% url 'class_delete_note' file.id object.id%}" method = "post">{% csrf_token %}
+                                    <input class= "btn btn-outline-danger btn-sm" type="submit" value="x" style="padding: 0.1vh 1vh 0.1vh 1vh;">
+                                    </form> &emsp;
+                                    <a href="{{ file.note.url }}" target="_blank">{{ file.title }}</a>
+                                </tr>
+                            </table>            
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col d-flex justify-content-center">
+
+        <div class="row justify-content-center">
+
+        <div class="card w-75 text-center bg-light mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Class Information</h4>
+                <table class="table text-center">
+                    <tr>
+                        <td> <strong>Instructor</strong>: {{object.instructor}} </td>
+                        <td> <strong>Location</strong>: {{object.location}} </td>
+                    </tr>
+                    <tr>
+                        <td> <strong>Time</strong>: {{object.start_time}} - {{object.end_time}} </td>
+                        <td> <strong>Class Size</strong>: {{object.enrolled_users_count}} </td>
+                    </tr>
+                </table>
+                <a href="#" class="btn btn-primary">Join chat room</a>
+            </div>
+        </div>
+
+        <div class="card  w-75 text-center bg-light">
+            <div class="card-body">
+                <h4 class="card-title">Your Classmates</h4>
+
+                <ul class="list-group text-center">
+                {% for classmate in classmates %}
+                <li class="list-group-item"> {{classmate}} </li>
+                {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+
+        </div>
+        
+    </div>
+
 </div>
-
-<div class="container text-center">
-    <h3 class="text-center">Uploaded Notes</h3>
-    {% if files %}
-    <ul class="list-group text-center">
-        {% for file in files%}
-        <li class="list-group-item">
-            <a href="{{ file.note.url }}" target="_blank">{{ file.title }}</a>
-            <table>
-                <tr>
-                    <form action="{% url 'class_delete_note' file.id object.id%}" method = "post">{% csrf_token %}
-                    <input class= "btn btn-outline-danger btn-sm" type="submit" value="x" style="padding: 0.1vh 1vh 0.1vh 1vh;">
-                    </form>
-                </tr>
-            </table>
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</div>
-    
-
 {% endblock %}
 

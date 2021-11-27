@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from allauth.socialaccount.models import SocialAccount
 from scheduler.models import *
+from django.core.files import File
 import datetime
 import unittest
 
@@ -177,36 +178,51 @@ class NoteFileTest(TestCase):
 	def setUp(self):
 		testUser1 = User.objects.create_user(username='testUser1', password='t3stpassw0rd1', email='testUser1@email.com')
 		testUser2 = User.objects.create_user(username='testUser2', password='t3stpassw0rd2', email='testUser2@email.com')
-		'''
+		
 		self.testProfile1 = Profile.objects.get(user=testUser1)
 		self.testProfile2 = Profile.objects.get(user=testUser2)
 
 		start1 = datetime.datetime.now()
 		start2 = datetime.datetime.now()
 
+		
+		p1 = open('test1.pdf')
+		p2 = open('test2.pdf')
+		p3 = open('test2.pdf')
+
+		pdf1 = File(p1)
+		pdf2 = File(p2)
+		pdf3 = File(p3)
+
+		'''
 		self.note1a = NoteFile.objects.create(note = 'Rplot.pdf', title = 'Rplot', upload_time = start1)
 		self.note1a.users.add(self.testProfile1)
 		self.note1b = NoteFile.objects.create(note = 'HW5.pdf', title = 'HW5', upload_time = start2)
 		self.note1b.users.add(self.testProfile1)
 		self.noteX = NoteFile.objects.create(note = 'test.pdf', title = 'Test', upload_time = start2)
-
+		'''
+		self.note1a = NoteFile.objects.create(note = pdf1, title = 'test1', upload_time = start1)
+		self.note1a.users.add(self.testProfile1)
+		self.note1b = NoteFile.objects.create(note = pdf2, title = 'test2', upload_time = start2)
+		self.note1b.users.add(self.testProfile1)
+		self.noteX = NoteFile.objects.create(note = pdf3, title = 'test3', upload_time = start2)
+		
 
 	def test_correct_number_of_files_for_user(self):
 		self.assertEquals(2, self.testProfile1.notefile_set.all().count())
 		self.assertEquals(0, self.testProfile2.notefile_set.all().count())
 
-
 	def test_note_items_belong_to_correct_profile(self):
 		user1_note_items = self.testProfile1.notefile_set.all()
 		self.assertTrue(self.note1a in user1_note_items and self.note1b in user1_note_items)
 
-	def test_npte_items_dont_belong_to_incorrect_profile(self):
+	def test_note_items_dont_belong_to_incorrect_profile(self):
 		user1_note_items = self.testProfile1.notefile_set.all()
 		user2_note_items = self.testProfile2.notefile_set.all()
 		self.assertFalse(self.note1a in user2_note_items and self.note1b in user2_note_items)
-		self.assertFalse(self.noteX in user1_todo_items)'''
+		self.assertFalse(self.noteX in user1_todo_items)
 
-
+	
 
 
 

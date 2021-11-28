@@ -247,6 +247,7 @@ class ClassView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['files'] = self.object.notes.filter(user = self.request.user.profile)
+        context['classmates'] = self.object.users.all()
         return context
 
 def AddNote(request, pk):

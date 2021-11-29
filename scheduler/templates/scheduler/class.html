@@ -58,7 +58,6 @@
                         <td> <strong>Class Size</strong>: {{object.enrolled_users_count}} </td>
                     </tr>
                 </table>
-                <a href="#" class="btn btn-primary">Join chat room</a>
             </div>
         </div>
 
@@ -68,7 +67,7 @@
 
                 <ul class="list-group text-center">
                 {% for classmate in classmates %}
-                <li class="list-group-item"> {{classmate}} </li>
+                <li class="list-group-item">{{classmate}} (<a href="mailto:{{classmate.user.email}}">{{classmate.user.email}}</a>)</li>
                 {% endfor %}
                 </ul>
 

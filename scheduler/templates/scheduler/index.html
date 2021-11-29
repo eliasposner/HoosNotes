@@ -15,23 +15,41 @@
 
     {% if user.is_authenticated %}
     <h2 class="text-center text-white">Welcome, {{ user.username }}!</h2>
-    <div class="col d-flex justify-content-center">
-        <div class="card text-center border-dark w-50">
-            <div class="card-body">
-                <p class="card-text"> HoosNotes </p>
+    <br>
+    <div class="row w-100" data-masonry='{"percentPosition": true }'>>
+        <div class="col-6 d-flex justify-content-center">
+            <div class = 'card w-75 border-dark'>
+                <h4 class = 'text-center'> Description </h4>
+                <div>
+                    <h5> Home </h5>
+                    <h6 style = "margin-left:20px"> The Home page provides a run down of what HoosNotes has to offer its users along
+                        with the ability to manage a simple to-do list that helps students manage their tasks. </h6>
+                </div>
+                <div>
+                    <h5> Calendar </h5>
+                    <h6 style = "margin-left:20px"> The calendar page is useful for taking note of major events that
+                            are to occur in the future, preventing the need for memory recall
+                            when considering how to plan ahead.</h6>
+                    <p style="margin-left:50px"> - Users can both create and delete events on the calendar page</p>
+                </div>
+                <div>
+                    <h5> Chat </h5>
+                    <h6 style = "margin-left:20px"> The chat room allows for students to communicate through the twilio API chatroom.</h6>
+                    <p style="margin-left:50px"> - Users can simply communicate with others users by clicking the join chat button <p>
+                </div>
+                <div>
+                    <h5> Classes </h5>
+                    <h6 style="margin-left:20px"> The my classes page allows for students to manage their classes along with uploading and sharing
+                        notes for better organization of class materials. </h6>
+                    <p style="margin-left:50px"> - Users are able to create and joing classes </p>
+                    <p style="margin-left:50px"> - Users are upload and share notes for each class </p>
+                </div>
+
             </div>
         </div>
-    </div>
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg">
-                <div class = 'card border-dark'>
-                    <h4 class = 'text-center'> Description </h4>
-                </div>
-            </div>
-            <div class="col-lg offset-sm-1">
-                <h4 class ="text-center"> HOOS TOO-DOOS List </h4>
+        <div class="col-6 d-flex justify-content-center" >
+            <div class = 'card w-75 border-dark'>
+                <h4 class ="text-center"> HOOS TOO-DOOS </h4>
                 <h6 class="text-center">Here's your to-do list:</h6>
 
 
@@ -40,11 +58,11 @@
                     <input type="submit" value="+">
                 </form> 
 
-                <div class="col d-flex justify-content-center">
-                <ul class="list-group w-25">
+                <div class="col d-flex justify-content-center" >
+                <ul class="list-group w-50" >
                 {% for i in all_items %} 
                 
-                            <li class="list-group-item" style="float:left;">
+                            <li class="list-group-item" style="float:left; overflow-wrap: break-word;" >
                                 <table>
                                     <tr>
                                         <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
@@ -62,32 +80,6 @@
         </div>
     </div>
     <br>
-    <div class="col d-flex justify-content-center">
-        <div class="card text-center border-dark w-50">
-            <div class="card-body">
-                <p class="card-text"> About Us </p>
-                <div class="container">
-                <div class="row">
-                    <div class="col">
-                    1 of 5
-                    </div>
-                    <div class="col">
-                    2 of 5
-                    </div>
-                    <div class="col">
-                    3 of 5
-                    </div>
-                    <div class="col">
-                    4 of 5
-                    </div>
-                    <div class="col">
-                    5 of 5
-                    </div>
-                </div>
-                </div>                
-            </div>
-        </div>
-    </div>
     
     {% else %}
 
@@ -127,6 +119,8 @@
     </div>
 
     {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+
     {% endblock %}
 
 </body>

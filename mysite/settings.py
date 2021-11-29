@@ -190,7 +190,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals(), test_runner=False)
+django_heroku.settings(locals())
 # This configures the my_adapter file, which handles collisions (when a social account and a regular account has the same email)
 # Adapted from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0

@@ -62,7 +62,12 @@
 
 		<p class="text-dark"> 
 			Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> 
-       </p>
+            <br>
+			<br>
+			<form class = "text-center" action="{% url 'delete_student_class' class.id%}" method = "post">{% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-md btn-block">Leave Class</button>
+            </form>
+       	</p>
        </li>
        </p>
        </div>
@@ -70,6 +75,7 @@
   </div>
 </div>
 {% else %}  
-    <p>No Classes are available.</p>  
+	<br>
+	<h2 class="text-center text-white">You are not currently enrolled in any classes.</h2>
 {% endif %}
 {% endblock %}

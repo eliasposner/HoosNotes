@@ -179,8 +179,8 @@ class StudentClassCreateView(CreateView):
     # https://stackoverflow.com/questions/46378465/class-based-views-cbv-createview-and-request-user-with-a-many-to-many-relatio
     def form_valid(self, form):
         self.object = form.save()
-        self.object.enrolled_users_count += 1
         self.object.users.add(self.request.user.profile)
+        self.object.enrolled_users_count += 1
         self.object.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -227,8 +227,14 @@ class JoinClassFilterView(ListView):
 def add_join_class(request, pk):
     studentclass = get_object_or_404(StudentClass, pk=pk)
     studentclass.users.add(request.user.profile)
-    if request.user.profile not in studentclass.users.all():
-        studentclass.enrolled_users_count += 1
+    studentclass.enrolled_users_count += 1
+    studentclass.save()
+    return HttpResponseRedirect('/listclasses')
+
+def remove_class(request, pk):
+    studentclass = get_object_or_404(StudentClass, pk=pk)
+    studentclass.users.remove(request.user.profile)
+    studentclass.enrolled_users_count -= 1
     studentclass.save()
     return HttpResponseRedirect('/listclasses')
 
@@ -267,7 +273,7 @@ def DeleteNote(request, pk, id):
     note = get_object_or_404(NoteFile, pk=pk)
     note.delete()
     return HttpResponseRedirect(reverse('class_detail', args=(id,)))
-
+    
 def ClassSearch(request):
     return HttpResponseRedirect(reverse('filtered_classes', args=(request.POST['instructor'], )))
 '''

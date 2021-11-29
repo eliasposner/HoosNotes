@@ -26,7 +26,7 @@
           </button>
     
         <div class="collapse navbar-collapse justify-content-center" id="navDropdown">
-            <a class="navbar-brand">HoosNotes</a>
+            <a style="color: orange; margin-right: 0px;" class="navbar-brand" >Hoos</a><a class="navbar-brand">Notes</a>
             <ul class="navbar-nav">
 
                 {% if user.is_authenticated %}
@@ -46,9 +46,9 @@
                         My Classes
                     </a>
                     <div class="dropdown-menu" aria-labelledby="classDropdown">
-                            <a class="dropdown-item" href="/listclasses">All Classes</a>
-                        <a class="dropdown-item" href="/createclass"> + Add class</a>
-                        <a class="dropdown-item" href="/joinclass">+ Join class</a>
+                            <a class="dropdown-item" href="/listclasses">Class List</a>
+                        <a class="dropdown-item" href="/createclass"> + Add Class</a>
+                        <a class="dropdown-item" href="/joinclass">+ Join Class</a>
                     </div>
                 </li>
                 <li class="nav-item">

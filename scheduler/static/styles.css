@@ -11,7 +11,9 @@ URLs: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html and https
 }
 
 .calendar tr, .calendar td {
-  border: 1px solid black;
+  border: 2px solid black;
+  #color: white;
+  background-color: white;
 }
 
 .calendar th {
@@ -24,6 +26,8 @@ URLs: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html and https
   width: 200px;
   height: 15vh;
   padding: 20px 0px 0px 5px;
+  background-color: white;
+  border:  2px solid black;
 }
 
 .month {

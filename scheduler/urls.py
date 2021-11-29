@@ -11,7 +11,7 @@ urlpatterns = [
     path('rest-auth/google/', views.GoogleLogin.as_view(), name='redirect'),
     path('createclass', views.StudentClassCreateView.as_view(), name='create_student_class'),
     path('listclasses/', views.StudentClassListView.as_view(), name = 'list_student_classes'),
-    path('joinclass', views.JoinClassListView.as_view(), name = 'join_student_classes'),
+    path('joinclass/', views.JoinClassListView.as_view(), name = 'join_student_classes'),
     path('addTodoItem/', views.addTodoView),
     path('deleteTodoItem/<int:i>/', views.deleteTodoView),
     path('calendar/', views.CalendarView.as_view(), name='calendar'),

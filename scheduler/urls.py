@@ -12,6 +12,7 @@ urlpatterns = [
     path('createclass', views.StudentClassCreateView.as_view(), name='create_student_class'),
     path('listclasses/', views.StudentClassListView.as_view(), name = 'list_student_classes'),
     path('joinclass/', views.joinclassView, name = 'join_student_classes'),
+    path('listclasses/removeclass/<int:pk>/', views.remove_class, name = 'delete_student_class'),
     path('joinclass/allclasses', views.JoinClassListView.as_view(), name= 'all_classes'),
     path('addTodoItem/', views.addTodoView),
     path('deleteTodoItem/<int:i>/', views.deleteTodoView),

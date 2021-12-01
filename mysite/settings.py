@@ -75,6 +75,7 @@ SITE_ID = 7
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_ON_GET = True
+SECURE_SSL_REDIRECT = False
 
 # Code for configuring authentication credential settings from Moeedlodhi, 6/21/2021
 # https://medium.com/geekculture/getting-started-with-django-social-authentication-80ee7dc26fe0

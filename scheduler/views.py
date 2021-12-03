@@ -36,18 +36,24 @@ def post(self, request, *args, **kwargs):
         token = Token.objects.get(key=response.data['key'])
         return Response({'token': token.key, 'id': token.user_id})
 
-# todoappView, a function based view for displaying TodoListItems the user has created
-# Adapted from Ashwin Joy
-# URL: https://pythonistaplanet.com/to-do-list-app-using-django/
-def todoappView(request):
+def indexView(request):
     if request.user.is_anonymous:
         return render(request, 'scheduler/index.html')
     q1 = Profile.objects.filter(user=request.user)[0]
     user_todo_items = q1.todolistitem_set.all()
     return render(request, 'scheduler/index.html', {'all_items':user_todo_items}) 
 
+
 def joinclassView(request):
     return render(request, 'scheduler/joinclass.html')
+
+# todoappView, a function based view for displaying TodoListItems the user has created
+# Adapted from Ashwin Joy
+# URL: https://pythonistaplanet.com/to-do-list-app-using-django/
+def todoAppView(request):
+    q1 = Profile.objects.filter(user=request.user)[0]
+    user_todo_items = q1.todolistitem_set.all()
+    return render(request, 'scheduler/todo.html', {'all_items':user_todo_items}) 
 
 # addTodoView, a function based view for adding TodoListItems
 # Adapted from Ashwin Joy
@@ -57,8 +63,7 @@ def addTodoView(request):
     new_item.save()
     new_item.users.add(request.user.profile)
     new_item.save()
-    return HttpResponseRedirect('/') 
-
+    return HttpResponseRedirect('/todo') 
 
 # deleteTodoView, a function based view for deleting TodoListItems
 # Adapted from Ashwin Joy 
@@ -66,7 +71,7 @@ def addTodoView(request):
 def deleteTodoView(request, i):
     todo_item = TodoListItem.objects.get(id=i)
     todo_item.delete()
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/todo')
 
 # CalendarView, a view that takes all the events a user has submitted and returns it in calendar format
 # Allows user to scroll between the current, previous, and next month

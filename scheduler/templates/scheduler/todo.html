@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col d-flex justify-content-center pt-2" >
+    <div class = 'card w-50 border-dark'>
+        <h4 class ="text-center display-6"> Hoos To-Dos </h4>
+            <p class="text-center">
+                To add a task to your list, enter a message in the text box and press "+"
+                <br>
+                To remove a task from your list, press the "x" button to the left of the task
+            </p>
+
+
+            <form class="text-center" action="/addTodoItem/" method = "post">{% csrf_token %}
+                <input type="text" name="content">
+                <input type="submit" value="+">
+            </form> 
+
+            <div class="col d-flex justify-content-center" >
+            <ul class="list-group w-50" >
+            {% for i in all_items %} 
+                <li class="list-group-item" style="float:left; overflow-wrap: break-word;" >
+                    <table>
+                        <tr>
+                            <form action="/deleteTodoItem/{{i.id}}/" method = "post">{% csrf_token %}
+                                <input class= "btn btn-outline-danger btn-sm" type="submit" value="X">
+                            </form> &emsp;           
+                            {{i.content}}
+                        </tr>
+                    </table>
+                </li>
+                    
+            {% endfor %}
+            </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

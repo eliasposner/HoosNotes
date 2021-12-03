@@ -14,40 +14,49 @@
     {% block content %}
 
     {% if user.is_authenticated %}
-    <h2 class="text-center text-white">Welcome, {{ user.username }}!</h2>
+    <!--<h2 class="text-center text-white">Welcome, {{ user.username }}!</h2>
     <br>
-    <div class="row w-100" data-masonry='{"percentPosition": true }'>>
-        <div class="col-6 d-flex justify-content-center">
-            <div class = 'card w-75 border-dark'>
-                <h4 class = 'text-center'> Description </h4>
-                <div>
-                    <h5> Home </h5>
-                    <h6 style = "margin-left:20px"> The Home page provides a run down of what HoosNotes has to offer its users along
-                        with the ability to manage a simple to-do list that helps students manage their tasks. </h6>
-                </div>
-                <div>
-                    <h5> Calendar </h5>
-                    <h6 style = "margin-left:20px"> The calendar page is useful for taking note of major events that
-                            are to occur in the future, preventing the need for memory recall
-                            when considering how to plan ahead.</h6>
-                    <p style="margin-left:50px"> - Users can both create and delete events on the calendar page</p>
-                </div>
-                <div>
-                    <h5> Chat </h5>
-                    <h6 style = "margin-left:20px"> The chat room allows for students to communicate through the twilio API chatroom.</h6>
-                    <p style="margin-left:50px"> - Users can simply communicate with others users by clicking the join chat button <p>
-                </div>
-                <div>
-                    <h5> Classes </h5>
-                    <h6 style="margin-left:20px"> The my classes page allows for students to manage their classes along with uploading and sharing
-                        notes for better organization of class materials. </h6>
-                    <p style="margin-left:50px"> - Users are able to create and joing classes </p>
-                    <p style="margin-left:50px"> - Users are upload and share notes for each class </p>
-                </div>
+    <div class="row w-100" data-masonry='{"percentPosition": true }'>-->
+    <br>
 
+        <div class="col d-flex justify-content-center">
+            <div class = 'card shadow w-50 border-dark'>
+                <div class = "card-body">
+                <h4 class = 'text-center display-6'> Welcome to HoosNotes, {{ user.username }}! </h4>
+                
+                <p class="text-center lead pt-1" style="font-size: 18px;">
+                HoosNotes is a web application that allows students to plan and organize classes.
+                <br>
+                Within HoosNotes, you'll find the following pages and their features:
+                </p>
+                    
+                <h5 class="text-center"> Todo </h5>
+                <ul class="d-flex col justify-content-center" style="list-style:none;">
+                    <li> Add and remove text items from a personal to-do list </li>
+                </ul>
+
+                <h5 class="text-center"> Calendar </h5>
+                <ul class="d-flex col justify-content-center" style="list-style:none;">
+                    <li> Add and delete events displayed on a visual calendar </li>
+                </ul>
+
+                <h5 class="text-center"> Chat </h5>
+                <ul class="d-flex col justify-content-center" style="list-style:none;">
+                    <li> Join live chat rooms where you can talk to other users currently on HoosNotes </li>
+                </ul>
+
+                <h5 class="text-center"> My Classes </h5>
+                
+                <ul class="text-center" style="list-style: none;">
+                    <li> Create and join classes </li>
+                    <li> Upload notes for each class and see who else is enrolled</li>
+                </ul>
+
+                </div>
             </div>
         </div>
-        <div class="col-6 d-flex justify-content-center" >
+
+        <!--<div class="col-6 d-flex justify-content-center" >
             <div class = 'card w-75 border-dark'>
                 <h4 class ="text-center"> HOOS TOO-DOOS </h4>
                 <h6 class="text-center">Here's your to-do list:</h6>
@@ -79,7 +88,7 @@
             </div>
         </div>
     </div>
-    <br>
+    <br>-->
     
     {% else %}
 

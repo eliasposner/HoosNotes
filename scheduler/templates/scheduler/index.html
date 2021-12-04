@@ -25,9 +25,11 @@
                 <h4 class = 'text-center display-6'> Welcome to HoosNotes, {{ user.username }}! </h4>
                 
                 <p class="text-center lead pt-1" style="font-size: 18px;">
-                HoosNotes is a web application that allows students to plan and organize classes.
+
+                <strong>HoosNotes</strong> is a web application that allows students to plan and organize classes.
                 <br>
-                Within HoosNotes, you'll find the following pages and their features:
+                Within <strong>HoosNotes</strong>, you'll find the following pages and their features:
+                
                 </p>
                     
                 <h5 class="text-center"> Todo </h5>
@@ -119,7 +121,7 @@
             <h3 class="mb-4">Welcome to HoosNotes!</h3>
 
             <h5>To create an account or sign in with an existing one, please click: </h5>
-            <a class="btn btn-lg btn-block btn-outline-danger" href="{% provider_login_url 'google' %}" type="submit">Log in with Google</a>
+            <a class="btn btn-lg btn-block btn-outline-success" href="{% provider_login_url 'google' %}" type="submit">Log in with Google</a>
 
 
           </div>

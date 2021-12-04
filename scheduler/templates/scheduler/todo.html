@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col d-flex justify-content-center pt-2" >
-    <div class = 'card w-50 border-dark'>
-        <h4 class ="text-center display-6"> Hoos To-Dos </h4>
-            <p class="text-center">
-                To add a task to your list, enter a message in the text box and press "+"
+<div class="col d-flex justify-content-center mt-4" >
+    <div class = 'card w-50 border-dark pb-2'>
+        <h4 class ="text-center display-6 mt-2"> Hoos To-Do's </h4>
+            
+            <div class="col d-flex justify-content-center">
+            <p>
+                To <strong>add</strong> a task to your list, enter a message in the text box and press "<strong>+</strong>"
                 <br>
-                To remove a task from your list, press the "x" button to the left of the task
+                To <strong>remove</strong> a task from your list, press the "<strong>x</strong>" button beside the task
             </p>
-
+            </div>
 
             <form class="text-center" action="/addTodoItem/" method = "post">{% csrf_token %}
                 <input type="text" name="content">

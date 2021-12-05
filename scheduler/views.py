@@ -60,9 +60,10 @@ def todoAppView(request):
 # URL: https://pythonistaplanet.com/to-do-list-app-using-django/
 def addTodoView(request):
     new_item = TodoListItem(content = request.POST['content'])
-    new_item.save()
-    new_item.users.add(request.user.profile)
-    new_item.save()
+    if new_item.content.strip() != "":
+        new_item.save()
+        new_item.users.add(request.user.profile)
+        new_item.save()
     return HttpResponseRedirect('/todo') 
 
 # deleteTodoView, a function based view for deleting TodoListItems

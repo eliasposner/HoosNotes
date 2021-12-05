@@ -1,7 +1,11 @@
-# Event submission form used to update calendar, provided by
-# Author: Hui Wen
-# Date: 7/29/2018
-# URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+########################################################################################
+#  REFERENCES
+#  Title: cal/forms.py
+#  Author: Hui Wen
+#  Date: 7/29/2018
+#  URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+#  Software License: <license software is released under>
+########################################################################################
 
 from django.forms import ModelForm, DateInput
 from .models import Event, StudentClass

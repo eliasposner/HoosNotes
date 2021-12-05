@@ -1,7 +1,16 @@
-# Calendar, a wrapper class used to add additional formating to the HTMLCalendar object, provided by
-# Author: Hui Wen
-# Date: 7/24/2018 and 7/29/2018
-# URLs: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html and https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+########################################################################################
+#  REFERENCES
+#
+#  Title: cal/utils.py
+#  Author: Hui Wen
+#  Date: 7/24/2018
+#  URL: https://www.huiwenteo.com/normal/2018/07/24/django-calendar.html
+#
+#  Title: cal/utils.py
+#  Author: Hui Wen
+#  Date: 7/29/2018
+#  URL: https://www.huiwenteo.com/normal/2018/07/29/django-calendar-ii.html
+########################################################################################
 
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar

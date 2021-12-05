@@ -15,7 +15,7 @@
                     {% csrf_token %}
                     <label class="form-label" for="formFile">Upload a .pdf file of your notes</label>
                     <br>
-                    <input class="form-control-md" type="text" name="title" placeholder="Note Title">
+                    <input class="form-control-md" type="text" name="title" placeholder="Note Title (optional)">
                     <br>
                     <input class="form-control-md" type="file" accept=".pdf" id="formFile" name="noteFile" required>
                     <button type="submit" class="btn btn-primary btn-md btn-block">Submit note</button>

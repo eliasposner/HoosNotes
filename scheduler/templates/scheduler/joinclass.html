@@ -19,10 +19,7 @@
 			<br>
 			<form action="{% url 'class_search' %}" method="post">
 				{% csrf_token %}
-				<!--<div style="float: left;">
-					<input class="form-control-sm" type="text" name="class_name" placeholder="Class Name">
-				</div>
-			-->
+
 				<div class="text-center">
 					<input class="form-control-sm" type="text" name="instructor" placeholder="Instructor" required>
 				</div>

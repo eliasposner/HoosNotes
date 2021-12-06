@@ -9,48 +9,38 @@
   <div class="row">
 <h3 class="text-left" style = "color: white;" > <br> Your Classes</h3>
 
- 		<div class="col-sm-4">
+ 		<div class="col-sm-3">
 		<p style="border:10px; padding: 0em;">
 		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
 		
 		<h4> 
 		
 			<br>
+			<a class="link-primary" href="{% url 'create_student_class'%}">
+			Create a new class + </a>
 			<br>
-			<a class="link-dark" href="{% url 'create_student_class'%}">
-			Add a Class +
+						<br>
+
+			<p class="text-dark" > or </p>
+			<br>
+
+			<a class="link-primary" href="{% url 'join_student_classes'%}">
+			Join a class + </a> 
 			<br>
 			<br>
 			<br>
 
-		</a> 
+		
+			<br>
 		</h4> 
 		</li>
        	</p>
        	</div>
 
-       	<div class="col-sm-4">
-		<p style="border:10px; padding: 0em;">
-		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
-		
-		<h4> 
-		
-			<br>
-			<br>
-			<a class="link-dark" href="{% url 'join_student_classes'%}">
-			Join a Class +
-			<br>
-			<br>
-			<br>
-
-		</a> 
-		</h4> 
-		</li>
-       	</p>
-       	</div>
+       
 
     {% for class in list_of_classes %}
-        <div class="col-sm-4">
+        <div class="col-sm-3">
 		<p style="border:10px; padding: 0em;">
 		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
 		
@@ -75,7 +65,40 @@
   </div>
 </div>
 {% else %}  
-	<br>
-	<h2 class="text-center text-white">You are not currently enrolled in any classes.</h2>
+	<div class="container">
+  <div class="row">
+<h3 class="text-left" style = "color: white;" > <br> You are not currently enrolled in any classes. </h3>
+
+ 		<div class="col-sm-3">
+		<p style="border:10px; padding: 0em;">
+		<li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
+		
+		<h4> 
+		
+			<br>
+			<a class="link-primary" href="{% url 'create_student_class'%}">
+			Create a new class + </a>
+			<br>
+						<br>
+
+			<p class="text-dark" > or </p>
+			<br>
+
+			<a class="link-primary" href="{% url 'join_student_classes'%}">
+			Join a class + </a> 
+			<br>
+			<br>
+			<br>
+
+		
+			<br>
+
+		 
+		</h4> 
+		</li>
+       	</p>
+       	</div>
+       	 </div>
+</div>
 {% endif %}
 {% endblock %}

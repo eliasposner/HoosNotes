@@ -7,7 +7,7 @@
 
 <div class="container">
 <h3 class="text-left" style = "color: white;" > <br> Your Classes</h3>
-<h6 class="text-left" style = "color: white;" > Click on a blue link to see class information</h6>
+<h6 class="text-left" style = "color: white;" > Click on a blue link to see class information.</h6>
 
 		
 <div class="row">
@@ -75,7 +75,7 @@
 
 {% else %}  
 	<div class="container">
-<h3 class="text-left" style = "color: white;" > <br> Your Classes</h3>
+<h3 class="text-left" style = "color: white;" > <br> You currently do not have any classes</h3>
 		
 <div class="row">
   <div class="col-lg-3 d-flex align-items-stretch" style = "padding: 1em">
@@ -86,7 +86,7 @@
 			<h5>
 			<br>
 
-			<br>
+			<p class="text-left" style = "color: black;" > Need to join a class?</p>
 
 			<a class="link-primary" href="{% url 'create_student_class'%}">
 			Create a new class + </a>

@@ -3,16 +3,16 @@
 {% block content %}
 
 <br>
-<div class="container">
-    <div class="row">
         {% if list_of_classes %}
-        
-        
-            <h3 class="text-light text-center">Search Results</h3>
+        <div class="container">
+
+            <div class="row">
+
+            <h3 class="text-light">Search Results</h3>
             {% for class in list_of_classes %}
-            <div class="col-sm-4">
-            <p style="border:10px; padding: 0em;">
-            <li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
+            <div class="col-lg-3 d-flex align-items-stretch" style = "padding: 1em">
+                <div class = 'card shadow w-100 border-dark'>
+                    <div class = "card-body">
             
             <h4> 
             <a class="link-primary" href="{% url 'join_class_detail' class.id %}"> 
@@ -22,16 +22,15 @@
     
             <p class="text-dark"> 
                 Instructor: {{class.instructor}} <br> Time: {{class.start_time}} - {{class.end_time}} <br> Location: {{class.location}} <br> 
-                </p>
-            </li>
             </p>
-            </div>
+        </div>
+    </div>
+</div>
             
-        {% endfor %}
-        <div class="col-sm-4">
-            <p style="border:10px; padding: 0em;">
-            <li class="list-group-item" style="border:5px; height: 300; border-style:solid; border-color: white; padding: 2em;">
-            
+            {% endfor %}
+        <div class="col-lg-3 d-flex align-items-stretch" style = "padding: 1em">
+                <div class = 'card shadow w-100 border-dark'>
+                    <div class = "card-body">
             <h4> 
             
                 <br>
@@ -45,9 +44,8 @@
     
             </a> 
             </h4> 
-            </li>
-            </p>
-            </div>
+           
+           </div>
     </div>
 </div>
       
@@ -60,14 +58,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col text-center">
-            <p style="border:10px; padding: 0em;">
-            <li class="list-group-item" style="border:5px; height: 300; font-size: 100%; border-style:solid; border-color: white; padding: 2em;">
-            
+        <div class="col-sm-12 d-flex align-items-stretch" style = "padding: 1em">
+                <div class = 'card shadow w-100 border-dark'>
+                    <div class = "card-body">
             <h4> 
             
                 <br>
-                Search again by instructor.			
+                <center>
+                    Search again by instructor.
+                </center>			
                 <br>
                 <br>
                 <form action="{% url 'class_search' %}" method="post">
@@ -94,8 +93,7 @@
                 <br>
                 <br>
             </h4> 
-            </li>
-               </p>
+          
             </div>
     </div> 
     {% endif %}

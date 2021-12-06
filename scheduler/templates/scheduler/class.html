@@ -21,7 +21,8 @@
                     <button type="submit" class="btn btn-primary btn-md btn-block">Submit note</button>
                 </form>
                 {% if files %}
-                    <ul class="list-group text-center">
+                    <div class="text-center">
+                    <ul class="list-group w-75" style="display: inline-block; text-align: left;">
                     {% for file in files%}
                         <li class="list-group-item">
                             <table>
@@ -35,6 +36,7 @@
                         </li>
                     {% endfor %}
                     </ul>
+                </div>
                 {% endif %}
             </div>
         </div>

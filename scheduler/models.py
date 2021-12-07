@@ -5,14 +5,13 @@
 #  Author: Vitor Freitas
 #  Date: 7/22/2016
 #  URL: https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
-#  Software License: <license software is released under>
 #
 #  Title: django-multiselectfield
 #  Author: blag, Goin, tomasgarzon
 #  Date: 2/20/2020
 #  Code version: 0.1.12
 #  URL: https://pypi.org/project/django-multiselectfield/
-#  Software License:
+#  Software License: LGPL v3
 #
 #  Title: How to Create a To-do List App Using Django
 #  Author: Ashwin Joy
